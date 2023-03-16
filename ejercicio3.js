@@ -4,69 +4,108 @@ class ProductManager {
 
     idAuto = 1;
 
-
     constructor() {
         this.products = [],
-        this.path = './products.txt'
+            this.path = './products.txt'
     }
 
     async addProduct(products) {
 
-        const productCode = this.products.find(product => product.code === products.code);
+        try {
+            const productCode = this.products.find(prod => prod.code === products.code);
 
-        if (productCode) {
-            throw new Error("No puedes agregar un producto con un code ya existente")
+            if (productCode) {
+                throw new Error("No puedes agregar un producto con un code ya existente")
+            }
+
+            this.products.push({
+                ...products,
+                id: this.idAuto
+            })
+
+            this.idAuto++;
+
+            await fs.promises.writeFile(this.path, JSON.stringify(this.products))
         }
 
-        this.products.push({
-            ...products,
-            id: this.idAuto
-        })
+        catch {
+            throw new Error("The product could not be added. Try again later")
+        }
 
-        this.idAuto++;
 
-        await fs.promises.writeFile(this.path, JSON.stringify(this.products))
     };
 
     async getProducts() {
-        const productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
-        return JSON.parse(productsFile)
+
+        try {
+            const productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            return JSON.parse(productsFile)
+        }
+
+        catch {
+            throw new Error("We could not receive the information. Try again later")
+        }
+
     };
 
     async getProductById(id) {
 
-        let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
-        productsFile = JSON.parse(productsFile)
+        try {
+            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            productsFile = JSON.parse(productsFile)
 
-        const product = productsFile.find(product => product.id === id)
+            const product = productsFile.find(product => product.id === id)
 
-        if (!product) {
-            throw new Error("Producto no encontrado")
+            if (!product) {
+                throw new Error("Producto no encontrado")
+            }
+            return product;
         }
-        return product;
+
+        catch {
+            throw new Error("The product could not be retrieved. Try again")
+        }
+
     }
 
     async updateProd(id, data) {
 
-        let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
-        productsFile = JSON.parse(productsFile)
+        try {
+            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            productsFile = JSON.parse(productsFile)
 
-        const prodIndex = productsFile.findIndex((prod) => prod.id === id)
-        
-        productsFile.splice( prodIndex, 1, {...data, id} )
+            const prodIndex = productsFile.findIndex((prod) => prod.id === id)
 
-        await fs.promises.writeFile(this.path, JSON.stringify(productsFile))
+            productsFile.splice(prodIndex, 1, { ...data, id })
+
+            await fs.promises.writeFile(this.path, JSON.stringify(productsFile))
+        }
+
+        catch {
+            throw new Error("The product could not be updated. Try again")
+        }
 
     }
 
     async deleteProd(id) {
 
-        let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
-        productsFile = JSON.parse(productsFile)
 
-        let newProducts = productsFile.filter((prod) => prod.id !== id)
+        try {
+            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            productsFile = JSON.parse(productsFile)
 
-        await fs.promises.writeFile(this.path, JSON.stringify(newProducts))
+            if (!productsFile.some((prod) => prod.id === id)) {
+                return "The entered product does not exist, please try with another ID"
+            }
+
+            let newProducts = productsFile.filter((prod) => prod.id !== id)
+
+            await fs.promises.writeFile(this.path, JSON.stringify(newProducts))
+        }
+
+        catch {
+            throw new Error("The product could not be deleted. Try again")
+        }
     }
 }
 
@@ -100,23 +139,23 @@ const productsList = [
 
 const manager = new ProductManager()
 
-/* productsList.forEach((product) => {
+
+
+productsList.forEach((product) => {
     manager.addProduct(product)
-}) */
+})
 
 manager.getProducts();
 
-/* manager.getProductById(3); */
+manager.getProductById(1);
 
-/* manager.deleteProd(3) */
+manager.deleteProd(3)
 
-/* manager.updateProd(3, {name: "carlos", edad: 25}); */
-
-/* manager.updateProd(1, {title: "producto prueba1",
-description: "PRODUCTO ACTUALIZADO",
-price: 200,
-thumbnail: "Sin imagen",
-code: 'abc123',
-stock: 50}) */
-
-/* manager.updateProd(1) */
+manager.updateProd(1, {
+    title: "Modificacion producto1",
+    description: "Probamos la modificacion del producto",
+    price: 500,
+    thumbnail: "Sin imagen",
+    code: 'abc500',
+    stock: 10
+})
