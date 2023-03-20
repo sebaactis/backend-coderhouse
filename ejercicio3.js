@@ -6,7 +6,7 @@ class ProductManager {
 
     constructor() {
         this.products = [],
-            this.path = './products.txt'
+        this.path = './products.json'
     }
 
     async addProduct(products) {
@@ -32,13 +32,12 @@ class ProductManager {
             throw new Error("The product could not be added. Try again later")
         }
 
-
     };
 
     async getProducts() {
 
         try {
-            const productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            const productsFile = await fs.promises.readFile(this.path, 'utf-8')
             return JSON.parse(productsFile)
         }
 
@@ -51,7 +50,7 @@ class ProductManager {
     async getProductById(id) {
 
         try {
-            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            let productsFile = await fs.promises.readFile(this.path, 'utf-8')
             productsFile = JSON.parse(productsFile)
 
             const product = productsFile.find(product => product.id === id)
@@ -71,7 +70,7 @@ class ProductManager {
     async updateProd(id, data) {
 
         try {
-            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            let productsFile = await fs.promises.readFile(this.path, 'utf-8')
             productsFile = JSON.parse(productsFile)
 
             const prodIndex = productsFile.findIndex((prod) => prod.id === id)
@@ -91,7 +90,7 @@ class ProductManager {
 
 
         try {
-            let productsFile = await fs.promises.readFile('./products.txt', 'utf-8')
+            let productsFile = await fs.promises.readFile(this.path, 'utf-8')
             productsFile = JSON.parse(productsFile)
 
             if (!productsFile.some((prod) => prod.id === id)) {
@@ -137,25 +136,33 @@ const productsList = [
 
 ]
 
-const manager = new ProductManager()
 
 
+const main = async () => {
 
-productsList.forEach((product) => {
-    manager.addProduct(product)
-})
+    const manager = new ProductManager()
 
-manager.getProducts();
+    productsList.forEach((product) => {
+        manager.addProduct(product)
+    })
 
-manager.getProductById(1);
+    manager.getProducts();
 
-manager.deleteProd(3)
+    manager.getProductById(1);
 
-manager.updateProd(1, {
-    title: "Modificacion producto1",
-    description: "Probamos la modificacion del producto",
-    price: 500,
-    thumbnail: "Sin imagen",
-    code: 'abc500',
-    stock: 10
-})
+    manager.deleteProd(3)
+
+    manager.updateProd(1, {
+        title: "Modificacion producto1",
+        description: "Probamos la modificacion del producto",
+        price: 500,
+        thumbnail: "Sin imagen",
+        code: 'abc500',
+        stock: 10
+    })
+
+}
+
+main();
+
+
