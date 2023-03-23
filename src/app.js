@@ -1,6 +1,7 @@
 import express from 'express';
 import ProductManager from './productManager.js';
 
+
 const app = express();
 
 const manager = new ProductManager;
@@ -9,9 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/products', (req, res) => {
 
-    const main = async () => {
+    const limit = req.query.limit;
 
-        const limit = req.query.limit;
+    const main = async () => {
 
         if (limit < 1) {
             res.send(await manager.getProducts());
