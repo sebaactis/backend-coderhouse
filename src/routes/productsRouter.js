@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import ProductManager from '../productManager.js'
+import ProductManager from '../ProductManager.js'
 
 const manager = new ProductManager();
 const productsRouter = Router();
@@ -10,6 +10,10 @@ productsRouter.get('/', async (req, res) => {
     const limit = req.query.limit;
 
     const products = await manager.getProducts()
+
+    if(limit < 0) {
+        return res.status(404).json({message: 'number invalid'});
+    }
 
     if (limit < 1) {
         res.status(200).json(products);
@@ -24,18 +28,21 @@ productsRouter.get('/:pid', async (req, res) => {
 
     const validProd = await manager.getProductById(id)
 
-    if (!validProd) {
+    console.log(validProd); 
+
+    if (validProd === "error") {
         res.status(404).json({ "error": "Product doesn't exist" });
+        return;
     }
 
     res.status(200).json(validProd)
 });
 
-productsRouter.post('/',  (req, res) => {
+productsRouter.post('/', async (req, res) => {
 
     let product = req.body;
 
-    manager.addProduct(product);
+    await manager.addProduct(product);
         
     res.status(201).json({ "completed": "The product has been added" });
 });

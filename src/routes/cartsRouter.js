@@ -16,7 +16,7 @@ cartsRouter.get('/:cid', async (req, res) => {
     let id = +req.params.cid;
     let cart = await cartsManager.getCartProducts(id);
 
-    if (cart) {
+    if (cart !== "Cart not found") {
         res.status(200).json(cart)
         return;
     }
@@ -30,7 +30,12 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
     const cartId = +req.params.cid;
     const prodId = +req.params.pid;
 
-    cartsManager.addProductCart(cartId, prodId)
+    let addProd = await cartsManager.addProductCart(cartId, prodId)
+
+    if(addProd === "Cart not exists") {
+        res.status(404).json({"message": "Cart not exists"})
+        return;
+    }
 
     res.status(200).json({"message": "Request successfull"})
 
