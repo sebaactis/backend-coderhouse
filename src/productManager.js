@@ -1,15 +1,19 @@
 import fs from 'fs';
-
 class ProductManager {
 
     idAuto = 1;
 
     constructor() {
         this.products = [],
-        this.path = '../products.json'
+            this.path = '../products.json'
     }
 
     async addProduct(products) {
+
+        const productsRead = await fs.promises.readFile(this.path, 'utf-8')
+        let productsFile = JSON.parse(productsRead)
+        this.products = productsFile;
+        this.idAuto = this.products.length + 1
 
         try {
             const productCode = this.products.find(prod => prod.code === products.code);
@@ -19,8 +23,8 @@ class ProductManager {
             }
 
             this.products.push({
-                ...products,
-                id: this.idAuto
+                id: this.idAuto,
+                ...products
             })
 
             this.idAuto++;
@@ -56,13 +60,13 @@ class ProductManager {
             const product = productsFile.find(product => product.id === id)
 
             if (!product) {
-                throw new Error("Producto no encontrado")
+                return "Product not found"
             }
             return product;
         }
 
         catch {
-            throw new Error("The product could not be retrieved. Try again")
+            return "The product could not be retrieved. Try again"
         }
 
     }
