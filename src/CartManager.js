@@ -6,10 +6,15 @@ class CartManager {
 
     constructor() {
         this.carts = [];
-        this.path = '../carts.json';
+        this.path = './database/carts.json';
     }
 
     async newCart() {
+
+        let carts = await fs.promises.readFile(this.path, 'utf-8')
+        carts = JSON.parse(carts)
+        this.carts = carts
+        this.idAuto = this.carts.length + 1
 
         try {
             this.carts.push({
@@ -50,6 +55,11 @@ class CartManager {
     }
 
     async addProductCart(cartId, prodId) {
+
+        let productsFile = await fs.promises.readFile('./database/products.json', 'utf-8')
+        productsFile = JSON.parse(productsFile)
+        console.log(productsFile)
+
         let cartFile = await fs.promises.readFile(this.path, 'utf-8')
         cartFile = JSON.parse(cartFile)
         let cart = cartFile.find(cart => cart.id === cartId)
@@ -60,15 +70,20 @@ class CartManager {
 
         let { products } = cart
 
-        const producExist = products.find(product => product.id === prodId)
+        const producInBase = productsFile.find(prod => prod.id === prodId)
+        const producInCart = products.find(prod => prod.product === prodId)
 
-        if (producExist) {
-            products = [...products, producExist.quantity = producExist.quantity + 1]
+        if (!producInBase) {
+            return 'Product doesnt exists'
+        }
+
+        if (producInCart) {
+            products = [...products, producInCart.quantity = producInCart.quantity + 1]
             await fs.promises.writeFile(this.path, JSON.stringify(cartFile))
             return;
         }
 
-        products.push({ id: prodId, quantity: 1 })
+        products.push({ product: prodId, quantity: 1 })
 
         await fs.promises.writeFile(this.path, JSON.stringify(cartFile))
     }

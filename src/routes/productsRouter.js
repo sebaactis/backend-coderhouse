@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { uploader } from '../multer.js';
 import ProductManager from '../ProductManager.js'
 
 const manager = new ProductManager();
@@ -11,8 +12,8 @@ productsRouter.get('/', async (req, res) => {
 
     const products = await manager.getProducts()
 
-    if(limit < 0) {
-        return res.status(404).json({message: 'number invalid'});
+    if (limit < 0) {
+        return res.status(404).json({ message: 'number invalid' });
     }
 
     if (limit < 1) {
@@ -28,7 +29,7 @@ productsRouter.get('/:pid', async (req, res) => {
 
     const validProd = await manager.getProductById(id)
 
-    console.log(validProd); 
+    console.log(validProd);
 
     if (validProd === "error") {
         res.status(404).json({ "error": "Product doesn't exist" });
@@ -38,23 +39,41 @@ productsRouter.get('/:pid', async (req, res) => {
     res.status(200).json(validProd)
 });
 
-productsRouter.post('/', async (req, res) => {
+productsRouter.post('/', uploader.single('file'), async (req, res) => {
 
     let product = req.body;
+    const { title, description, code, price, status, stock, category, thumbnail } = product;
+
+    if (title === "" || description == "" || code == "" || price === "" || status === "" || stock === "" || category === "") {
+        res.status(404).json({ message: "One of the fields are empty" })
+        return;
+    }
+    product.thumbnail = [req.file.path]
+    product.price = Number(product.price)
+    product.status = Boolean(product.status)
+    product.stock = Number(product.stock)
 
     await manager.addProduct(product);
-        
-    res.status(201).json({ "completed": "The product has been added" });
+
+    res.status(201).json({ completed: "The product has been added" });
 });
 
-productsRouter.put('/:pid',  (req, res) => {
+productsRouter.put('/:pid', (req, res) => {
 
-    const id = +req.params.pid;
-    const data = req.body;
+    let id = +req.params.pid;
+    let data = req.body;
+
+    const {title, description, code, price, status, stock, category, thumbnail} = data;
+
+
+    if (title === "" || description == "" || code === "" || price === "" || status === "" || stock === ""|| category === "") {
+        res.status(404).json({ message: "One of the fields are empty" })
+        return;
+    }
 
     manager.updateProd(id, data)
 
-    res.status(200).json({"message": `product ${id} has been edited`})
+    res.status(200).json({ "message": `product ${id} has been edited` })
 
 });
 
@@ -63,7 +82,7 @@ productsRouter.delete('/:pid', (req, res) => {
 
     manager.deleteProd(id)
 
-    res.status(200).json({"message": `product ${id} has been deleted`})
+    res.status(200).json({ "message": `product ${id} has been deleted` })
 });
 
 export default productsRouter;
