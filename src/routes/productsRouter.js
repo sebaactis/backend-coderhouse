@@ -48,12 +48,18 @@ productsRouter.post('/', uploader.single('file'), async (req, res) => {
         res.status(404).json({ message: "One of the fields are empty" })
         return;
     }
+
     product.thumbnail = [req.file.path]
     product.price = Number(product.price)
     product.status = Boolean(product.status)
     product.stock = Number(product.stock)
 
-    await manager.addProduct(product);
+    let addProd = await manager.addProduct(product);
+
+    if(addProd === 'You cant add a product with a existing code') {
+        res.status(404).json({ message: "You cant add a product with a existing code"})
+        return;
+    }
 
     res.status(201).json({ completed: "The product has been added" });
 });

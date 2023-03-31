@@ -19,7 +19,7 @@ class ProductManager {
             const productCode = this.products.find(prod => prod.code === products.code);
 
             if (productCode) {
-                throw new Error("No puedes agregar un producto con un code ya existente")
+                return 'You cant add a product with a existing code'
             }
 
             this.products.push({

@@ -58,7 +58,6 @@ class CartManager {
 
         let productsFile = await fs.promises.readFile('./database/products.json', 'utf-8')
         productsFile = JSON.parse(productsFile)
-        console.log(productsFile)
 
         let cartFile = await fs.promises.readFile(this.path, 'utf-8')
         cartFile = JSON.parse(cartFile)

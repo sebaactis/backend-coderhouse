@@ -32,12 +32,16 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
 
     let addProd = await cartsManager.addProductCart(cartId, prodId)
 
-    if(addProd === "Cart not exists" || addProd === "Product doesnt exists") {
-        res.status(404).json({"message": "The product or the cart dont exist"})
+    if (addProd === "Cart not exists") {
+        res.status(404).json({ "message": "The cart doesnt exist" })
         return;
+    } else if (addProd === "Product doesnt exists") {
+        res.status(404).json({ "message": "The product doesnt exist" })
+        return;
+    } else {
+        res.status(200).json({ "message": "The product has been added in the cart" })
     }
 
-    res.status(200).json({"message": "Request successfull"})
 
 })
 
