@@ -6,7 +6,7 @@ class CartManager {
 
     constructor() {
         this.carts = [];
-        this.path = './database/carts.json';
+        this.path = './src/database/carts.json';
     }
 
     async newCart() {
@@ -56,7 +56,7 @@ class CartManager {
 
     async addProductCart(cartId, prodId) {
 
-        let productsFile = await fs.promises.readFile('./database/products.json', 'utf-8')
+        let productsFile = await fs.promises.readFile('./src/database/products.json', 'utf-8')
         productsFile = JSON.parse(productsFile)
 
         let cartFile = await fs.promises.readFile(this.path, 'utf-8')
