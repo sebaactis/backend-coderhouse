@@ -7,7 +7,6 @@ const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
 
-
     const limit = req.query.limit;
 
     const products = await manager.getProducts()
@@ -25,7 +24,7 @@ productsRouter.get('/', async (req, res) => {
 
 productsRouter.get('/:pid', async (req, res) => {
 
-    const id = +req.params.pid;
+    const id = req.params.pid;
 
     const validProd = await manager.getProductById(id)
 
@@ -49,10 +48,10 @@ productsRouter.post('/', uploader.single('file'), async (req, res) => {
         return;
     }
 
-    product.thumbnail = [req.file.path]
+    /* product.thumbnail = [req.file.path]
     product.price = Number(product.price)
     product.status = Boolean(product.status)
-    product.stock = Number(product.stock)
+    product.stock = Number(product.stock) */
 
     let addProd = await manager.addProduct(product);
 
@@ -66,7 +65,7 @@ productsRouter.post('/', uploader.single('file'), async (req, res) => {
 
 productsRouter.put('/:pid', (req, res) => {
 
-    let id = +req.params.pid;
+    let id = req.params.pid;
     let data = req.body;
 
     const {title, description, code, price, status, stock, category, thumbnail} = data;
@@ -79,12 +78,12 @@ productsRouter.put('/:pid', (req, res) => {
 
     manager.updateProd(id, data)
 
-    res.status(200).json({ "message": `product ${id} has been edited` })
+    res.status(200).json({ "message": `product ${id} has been edited`, data})
 
 });
 
 productsRouter.delete('/:pid', (req, res) => {
-    const id = +req.params.pid;
+    const id = req.params.pid;
 
     manager.deleteProd(id)
 

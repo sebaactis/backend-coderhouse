@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import productsRouter from './routes/productsRouter.js'
 import cartsRouter from './routes/cartsRouter.js'
 import viewsRouter from './routes/views.router.js'
@@ -9,11 +10,14 @@ import { Server } from 'socket.io'
 // Express
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Express ON
-const httpServer = app.listen(8080, () => {
+const httpServer = app.listen(8081, () => {
     console.log('Listening on port 8080');
 });
+
+mongoose.connect('mongodb+srv://sebaactis:Carp1910@clustercoder.wzedryy.mongodb.net/Prods+Carts')
 
 // Express + WebSocket
 const socketServer = new Server(httpServer);
@@ -31,7 +35,6 @@ app.set('views', viewsPath);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter)
-app.use(express.json());
 
 socketServer.on('connection', socket => {
 
@@ -44,10 +47,9 @@ socketServer.on('connection', socket => {
         socket.broadcast.emit('chatRoom1', data);
 
     });
-
-
-
 })
+
+export { socketServer }; 
 
 
 
