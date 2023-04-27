@@ -14,10 +14,10 @@ app.use(express.json());
 
 // Express ON
 const httpServer = app.listen(8081, () => {
-    console.log('Listening on port 8080');
+    console.log('Listening on port 8081');
 });
 
-mongoose.connect('mongodb+srv://sebaactis:Carp1910@clustercoder.wzedryy.mongodb.net/Prods+Carts')
+mongoose.connect('mongodb+srv://sebaactis:Carp1910@clustercoder.wzedryy.mongodb.net/e-commerce')
 
 // Express + WebSocket
 const socketServer = new Server(httpServer);
