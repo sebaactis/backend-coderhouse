@@ -13,7 +13,7 @@ class daoCartMongoose {
 
     async getCart(id) {
         try {
-            let cart = await cartModel.findOne({ _id: id })
+            let cart = await cartModel.findOne({ _id: id })/* .populate('products.product') */
             return cart
         }
 

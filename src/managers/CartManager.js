@@ -39,26 +39,20 @@ class CartManager {
             return 'Product doesnt exists'
         }
 
-        let product = {
-            id: prodId,
-            quantity: 1
-        }
-
         let cart = await this.daoCart.getCart(cartId)
-
         let products = cart.products
 
-        let productInCart = products.find(prod => prod.id === prodId)
+        let productInCart = products.find(prod => prod.product === prodId)
+
 
         if (productInCart) {
             products = [...products, productInCart.quantity += 1 ]
-            return this.daoCart.updateCart(cartId, cart)
+            return await this.daoCart.updateCart(cartId, cart)
         } else {
-            cart.products = [...products, product]
-            await this.daoCart.updateCart(cartId, cart)
+            products.push({product: prodId, quantity: 1})
+            return await this.daoCart.updateCart(cartId, cart)
         }
     }
-
 }
 
 export default CartManager;
