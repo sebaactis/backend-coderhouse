@@ -2,8 +2,18 @@ import mongoose from "mongoose";
 
 const cartsCollection = 'carts';
 
-const cartsSchema = new mongoose.Schema({
-    products: {type: Array, ref: 'products', default: []}
+const cartsSchema = mongoose.Schema({
+    products:{
+        type: [
+            {
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "products"
+                }
+            }
+        ],
+        default: []
+    }
 })
 
 cartsSchema.pre('findOne', function() {
