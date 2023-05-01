@@ -2,10 +2,10 @@ import { productModel } from '../../models/product.model.js';
 
 class daoProductMongoose {
 
-    async addProduct(products) {
+    async addProduct(product) {
 
         try {
-            await productModel.create(products);
+            await productModel.create(product);
         }
 
         catch {

@@ -30,11 +30,11 @@ export const addToCart = async (req, res) => {
     
     let addProd = await manager.addProductCart(cartId, prodId)
 
-    if (addProd === "Cart not exists") {
-        res.status(404).json({ "message": "The cart doesnt exist" })
+    if (addProd === "Cart not found") {
+        res.status(404).json({ "message": "Cart not found" })
         return;
-    } else if (addProd === "Product doesnt exists") {
-        res.status(404).json({ "message": "The product doesnt exist" })
+    } else if (addProd === "Product not found") {
+        res.status(404).json({ "message": "Product not found" })
         return;
     } else {
         res.status(200).json({ "message": "The product has been added in the cart" })

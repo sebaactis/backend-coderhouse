@@ -36,15 +36,19 @@ class CartManager {
         let prodExis = await this.daoProduct.getProductById(prodId)
 
         if(!prodExis) {
-            return 'Product doesnt exists'
+            return 'Product not found'
         }
 
         let cart = await this.daoCart.getCart(cartId)
+
+        if(!cart) {
+            return "Cart not found";
+        }
         let products = cart.products
 
         let productInCart = products.find(prod => prod.product === prodId)
 
-
+        
         if (productInCart) {
             products = [...products, productInCart.quantity += 1 ]
             return await this.daoCart.updateCart(cartId, cart)

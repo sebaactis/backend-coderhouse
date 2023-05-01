@@ -6,10 +6,10 @@ class ProductManager {
         this.dao = new daoProductMongoose();
     }
 
-    async addProduct(products) {
+    async addProduct(product) {
 
         try {
-            await this.dao.addProduct(products);
+            await this.dao.addProduct(product);
         }
 
         catch {
@@ -34,7 +34,7 @@ class ProductManager {
 
         try {
             const product = await this.dao.getProductById(id)
-            return product  
+            return product
         }
 
         catch {

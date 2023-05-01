@@ -27,7 +27,7 @@ export const getOne = async (req, res) => {
 
     console.log(validProd);
 
-    if (validProd === "error") {
+    if (validProd === null) {
         res.status(404).json({ "error": "Product doesn't exist" });
         return;
     }
@@ -36,6 +36,8 @@ export const getOne = async (req, res) => {
 };
 
 export const create = async (req, res) => {
+
+    const products = await manager.getProducts();
 
     let product = req.body;
     
@@ -46,22 +48,26 @@ export const create = async (req, res) => {
         return;
     }
 
+    const productCode = products.find(prod => prod.code === product.code)
+
+    if(productCode) {
+        res.status(200).json({message: "We just have one product with this code, choose another one"})
+        return;
+    }
+
     /* product.thumbnail = [req.file.path]
     product.price = Number(product.price)
     product.status = Boolean(product.status)
     product.stock = Number(product.stock) */
 
-    let addProd = await manager.addProduct(product);
-
-    if (addProd === 'You cant add a product with a existing code') {
-        res.status(404).json({ message: "You cant add a product with a existing code" })
-        return;
-    }
+    await manager.addProduct(product);
 
     res.status(201).json({ completed: "The product has been added" });
 };
 
-export const update = (req, res) => {
+export const update = async (req, res) => {
+
+    const products = await manager.getProducts();
 
     let id = req.params.pid;
     let data = req.body;
@@ -74,15 +80,31 @@ export const update = (req, res) => {
         return;
     }
 
-    manager.updateProd(id, data)
+    const productId = products.find(prod => prod.id === id)
+
+    if(!productId) {
+        res.status(404).json({message: 'Product not found'})
+        return;
+    }
+
+    await manager.updateProd(id, data)
 
     res.status(200).json({ "message": `product ${id} has been edited`, data })
 
 };
 
-export const deleteOne = (req, res) => {
+export const deleteOne = async (req, res) => {
+
+    const products = await manager.getProducts();
 
     const id = req.params.pid;
+
+    const prodId = products.find(prod => prod.id === id)
+
+    if(!prodId) {
+        res.status(404).json({ message: 'Product not found'});
+        return;
+    }
 
     manager.deleteProd(id)
 
