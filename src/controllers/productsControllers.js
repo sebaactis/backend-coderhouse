@@ -4,18 +4,22 @@ const manager = new ProductManager();
 
 export const getAll = async (req, res) => {
 
-    const limit = req.query.limit;
+    let { limit, sort, category } = req.query
+    sort = +sort
+    limit = +limit
 
-    const products = await manager.getProducts()
 
-    if (limit < 0) {
+    const products = await manager.getProducts(sort, category)
+
+
+    if (limit <= 0) {
         return res.status(404).json({ message: 'number invalid' });
     }
 
-    if (limit < 1) {
-        res.status(200).json(products);
+    if (!limit) {
+        res.status(200).json({status:"success", payload: products});
     } else {
-        res.status(200).json(products.slice(0, limit));
+        res.status(200).json({status: "success", payload: products.slice(0, limit)}); 
     }
 }
 
@@ -24,8 +28,6 @@ export const getOne = async (req, res) => {
     const id = req.params.pid;
 
     const validProd = await manager.getProductById(id)
-
-    console.log(validProd);
 
     if (validProd === null) {
         res.status(404).json({ "error": "Product doesn't exist" });
@@ -62,7 +64,7 @@ export const create = async (req, res) => {
 
     await manager.addProduct(product);
 
-    res.status(201).json({ completed: "The product has been added" });
+    res.status(201).json({ completed: "The product has been added", product });
 };
 
 export const update = async (req, res) => {
@@ -110,3 +112,14 @@ export const deleteOne = async (req, res) => {
 
     res.status(200).json({ "message": `product ${id} has been deleted` })
 };
+
+
+/* {
+    "title": {{TITLE}},
+    "description": {{DESCRIPTION}},
+    "code": {{CODE}},
+    "price": {{PRICE}},
+    "status": true,
+    "stock": {{STOCK}},
+    "category": "zapatillas"
+} */

@@ -40,3 +40,42 @@ export const addToCart = async (req, res) => {
         res.status(200).json({ "message": "The product has been added in the cart" })
     }
 }
+
+export const updateCart = async (req, res) => {
+
+    const cartId = req.params.cid
+    const newCart = req.body
+
+    await manager.updateCart(cartId, newCart)
+
+    res.status(200).json({ "message": "Cart updated successfully" })
+}
+
+export const updateOneProductCart = async (req, res) => {
+    const cartId = req.params.cid
+    const prodId = req.params.pid
+    const newQuantity = req.body
+
+    await manager.updateOneProductCart(cartId, prodId, newQuantity)
+
+    res.status(200).json({ message: "The quantity of this products has been updated in the cart" })
+}
+
+export const removeFromCart = async (req, res) => {
+    const cartId = req.params.cid
+    const prodId = req.params.pid
+
+    await manager.removeFromCart(cartId, prodId)
+
+    res.status(200).json({message: "Product deleted from the cart"})
+
+}
+
+export const removeAllCart = async (req, res) => {
+    
+    const cartId = req.params.cid
+
+    await manager.removeAllCart(cartId)
+
+    res.status(200).json({message: "The cart has been empty"});
+}

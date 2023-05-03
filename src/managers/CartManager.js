@@ -23,7 +23,7 @@ class CartManager {
     async getCartProducts(id) {
 
         try {
-            return  this.daoCart.getCart(id);
+            return  this.daoCart.getCartPopulate(id);
         }
 
         catch {
@@ -46,17 +46,48 @@ class CartManager {
         }
         let products = cart.products
 
-        let productInCart = products.find(prod => prod.product === prodId)
-
+        products.push({product: prodId, quantity: 1})
+        return await this.daoCart.updateCart(cartId, cart)
         
-        if (productInCart) {
-            products = [...products, productInCart.quantity += 1 ]
-            return await this.daoCart.updateCart(cartId, cart)
-        } else {
-            products.push({product: prodId, quantity: 1})
-            return await this.daoCart.updateCart(cartId, cart)
-        }
+    }
+
+    async updateCart(cartId, newCart) {
+
+        let cart = await this.daoCart.getCart(cartId)
+
+        cart.products = newCart
+        
+        await this.daoCart.updateCart(cartId, cart)
+    }
+
+    async updateOneProductCart (cartId, prodId, newQuantity) {
+        let cart = await this.daoCart.getCart(cartId)
+        let products = cart.products
+        let prod = products.find(prod => prod.product === prodId)
+        prod.quantity = newQuantity.quantity
+
+        console.log(cart)
+
+        await this.daoCart.updateCart(cartId, cart)
+        
+    }
+
+    async removeFromCart(cartId, prodId) {
+        let cart = await this.daoCart.getCart(cartId)
+        cart.products = await cart.products.filter(prod => prod.product !== prodId)  
+
+        await this.daoCart.updateCart(cartId, cart)
+    
+    }
+
+    async removeAllCart(cartId) {
+
+        let cart = await this.daoCart.getCart(cartId)
+
+        cart.products = [];
+
+        await this.daoCart.updateCart(cartId, cart)
     }
 }
 
-export default CartManager;
+export default CartManager; 

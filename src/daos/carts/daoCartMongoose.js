@@ -11,9 +11,20 @@ class daoCartMongoose {
         }
     }
 
+    async getCartPopulate(id) {
+        try {
+            let cart = await cartModel.findOne({ _id: id }).populate('products.product')
+            return cart
+        }
+
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     async getCart(id) {
         try {
-            let cart = await cartModel.findOne({ _id: id })/* .populate('products.product') */
+            let cart = await cartModel.findOne({ _id: id })
             return cart
         }
 
@@ -23,6 +34,7 @@ class daoCartMongoose {
     }
 
     async updateCart(cartId, cart) {
+
         try {
             await cartModel.updateOne({ _id: cartId }, cart)
         }

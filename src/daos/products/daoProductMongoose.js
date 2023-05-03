@@ -13,17 +13,36 @@ class daoProductMongoose {
         }
     };
 
-    async getProducts() {
+    async getProducts(sort, category) {
 
-        try {
-            const products = await productModel.find();
-            return products
+        if(category && (sort !== 1 && sort !== -1)) {
+            return productModel.aggregate([
+                { $match: { category }}
+            ])
         }
 
-        catch {
-            throw new Error("We could not receive the information. Try again later")
+        if(category && (sort === 1 || sort === -1)) {
+            return productModel.aggregate([
+                {
+                    $match: { category }
+                },
+                {
+                    $sort: { price: sort }
+                }
+            ])
         }
+
+        if (sort === 1 || sort === -1) {
+            return productModel.aggregate([
+                {
+                    $sort: { price: sort }
+                }
+            ])
+        }
+
+        return productModel.find();
     };
+
 
     async getProductById(id) {
 
