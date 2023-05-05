@@ -18,10 +18,10 @@ class ProductManager {
 
     };
 
-    async getProducts(sort, category) {
+    async getProducts(sort, category, limit, page, stock) {
 
         try {
-         const products = await this.dao.getProducts(sort, category);
+         const products = await this.dao.getProducts(sort, category, limit, page, stock);
          return products
         }
 

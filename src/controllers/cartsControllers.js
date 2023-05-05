@@ -46,7 +46,11 @@ export const updateCart = async (req, res) => {
     const cartId = req.params.cid
     const newCart = req.body
 
-    await manager.updateCart(cartId, newCart)
+    let cart = await manager.updateCart(cartId, newCart)
+
+    if(cart === 'Cart not found') {
+        return res.status(404).json({ "message": "Cart doesn't exist" })
+    }
 
     res.status(200).json({ "message": "Cart updated successfully" })
 }
@@ -56,7 +60,11 @@ export const updateOneProductCart = async (req, res) => {
     const prodId = req.params.pid
     const newQuantity = req.body
 
-    await manager.updateOneProductCart(cartId, prodId, newQuantity)
+    let cart = await manager.updateOneProductCart(cartId, prodId, newQuantity)
+
+    if(cart === 'Cart not found') {
+        return res.status(404).json({ "message": "Cart doesn't exist" })
+    }
 
     res.status(200).json({ message: "The quantity of this products has been updated in the cart" })
 }
@@ -65,7 +73,11 @@ export const removeFromCart = async (req, res) => {
     const cartId = req.params.cid
     const prodId = req.params.pid
 
-    await manager.removeFromCart(cartId, prodId)
+    let cart = await manager.removeFromCart(cartId, prodId)
+
+    if(cart === 'Cart not found') {
+        return res.status(404).json({ "message": "Cart doesn't exist" })
+    }
 
     res.status(200).json({message: "Product deleted from the cart"})
 
@@ -75,7 +87,11 @@ export const removeAllCart = async (req, res) => {
     
     const cartId = req.params.cid
 
-    await manager.removeAllCart(cartId)
+    let cart = await manager.removeAllCart(cartId)
+
+    if(cart === 'Cart not found') {
+        return res.status(404).json({ "message": "Cart doesn't exist" })
+    }
 
     res.status(200).json({message: "The cart has been empty"});
 }

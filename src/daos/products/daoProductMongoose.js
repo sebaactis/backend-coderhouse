@@ -13,18 +13,37 @@ class daoProductMongoose {
         }
     };
 
-    async getProducts(sort, category) {
+    async getProducts(sort, category, limit, page, stock) {
 
-        if(category && (sort !== 1 && sort !== -1)) {
+
+        if (category && (sort !== 1 && sort !== -1)) {
             return productModel.aggregate([
-                { $match: { category }}
+                { $match: { category } }
             ])
         }
 
-        if(category && (sort === 1 || sort === -1)) {
+        if (stock && (sort !== 1 && sort !== -1)) {
+            return productModel.aggregate([
+                { $match: { stock: stock } }
+            ])
+        }
+
+
+        if (category && (sort === 1 || sort === -1)) {
             return productModel.aggregate([
                 {
                     $match: { category }
+                },
+                {
+                    $sort: { price: sort }
+                }
+            ])
+        }
+
+        if (stock && (sort === 1 || sort === -1)) {
+            return productModel.aggregate([
+                {
+                    $match: { stock: stock }
                 },
                 {
                     $sort: { price: sort }
@@ -40,7 +59,12 @@ class daoProductMongoose {
             ])
         }
 
-        return productModel.find();
+        if (!limit || limit <= 0) {
+            return productModel.paginate({}, { limit: 10, page: 1 })
+        } else {
+            return productModel.paginate({}, { limit: limit, page: page })
+        }
+
     };
 
 

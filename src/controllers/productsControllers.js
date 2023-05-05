@@ -4,15 +4,18 @@ const manager = new ProductManager();
 
 export const getAll = async (req, res) => {
 
-    let { limit, sort, category } = req.query
+    let { limit, sort, category, page, stock } = req.query
     sort = +sort
     limit = +limit
+    page = +page
+    stock = +stock
+
+    const products = await manager.getProducts(sort, category, limit, page, stock)
+
+    res.status(200).json({status: 'success', payload: products})
 
 
-    const products = await manager.getProducts(sort, category)
-
-
-    if (limit <= 0) {
+    /* if (limit <= 0) {
         return res.status(404).json({ message: 'number invalid' });
     }
 
@@ -20,7 +23,7 @@ export const getAll = async (req, res) => {
         res.status(200).json({status:"success", payload: products});
     } else {
         res.status(200).json({status: "success", payload: products.slice(0, limit)}); 
-    }
+    } */
 }
 
 export const getOne = async (req, res) => {
@@ -114,12 +117,3 @@ export const deleteOne = async (req, res) => {
 };
 
 
-/* {
-    "title": {{TITLE}},
-    "description": {{DESCRIPTION}},
-    "code": {{CODE}},
-    "price": {{PRICE}},
-    "status": true,
-    "stock": {{STOCK}},
-    "category": "zapatillas"
-} */
