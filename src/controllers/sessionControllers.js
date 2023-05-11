@@ -1,25 +1,18 @@
-import UserManager from "../managers/UserManager.js";
-import bcrypt from 'bcrypt'
+import SessionManager from "../managers/SessionManager.js";
 
 export const login = async (req, res) => {
-
     const { email, password } = req.body
+    const manager = new SessionManager();
 
-    if (!email && !password) {
-        throw new Error("Email and password invalid format");
-    }
+    let user = await manager.login(email, password);
 
-    const manager = new UserManager();
-    const user = await manager.getOneUser(email)
-    const isHashedPassword = bcrypt.compare(password, user.password)
-
-    if (!isHashedPassword) {
+    if (user === 'Login failed') {
         return res.status(401).send({ message: "Login failed, password is incorrect" })
     }
 
     req.session.user = { email };
 
-    res.send({ message: "Login successfull" });
+    res.status(200).send({ message: "Login successfull" });
 
 }
 
@@ -36,14 +29,10 @@ export const logout = async (req, res) => {
 
 export const signup = async (req, res) => {
 
-    const manager = new UserManager();
+    const manager = new SessionManager();
+    const data = req.body;
 
-    const payload = {
-        ...req.body,
-        password: await bcrypt.hash(req.body.password, 10)
-    }
-
-    const user = await manager.addUser(payload);
+    let user = await manager.signup(data);
 
     res.status(201).json({ status: "success", user, message: "User added successfully" });
 
