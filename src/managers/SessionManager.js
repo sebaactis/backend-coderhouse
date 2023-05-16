@@ -14,7 +14,7 @@ class SessionManager {
 
         const isHashedPassword = await bcrypt.compare(password, user.password)
 
-        if(!isHashedPassword) {
+        if (!isHashedPassword) {
             return 'Login failed'
         }
 
@@ -34,6 +34,25 @@ class SessionManager {
         return user;
     };
 
+    async forgotPassword(email, password) {
+        const manager = new UserManager();
+
+        const user = await manager.getOneUser(email);
+
+        password = await bcrypt.hash(password, 10);
+
+        console.log(password)
+
+        if(!user) {
+            return "User doesnt exist"
+        }
+
+        user.password = password;
+
+        await manager.updateUser(email, user);
+        return user;
+
+    }
 }
 
 export default SessionManager

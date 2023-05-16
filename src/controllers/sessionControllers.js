@@ -37,3 +37,15 @@ export const signup = async (req, res) => {
     res.status(201).json({ status: "success", user, message: "User added successfully" });
 
 };
+
+export const forgotPassword = async (req, res) => {
+
+    const { email, password } = req.body;
+    const manager = new SessionManager();
+
+    await manager.forgotPassword(email, password);
+
+    res.status(200).json({status: "success", message: "Password updated successfully" });
+
+
+}
