@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config();
+
 import express from 'express';
 import mongoose from 'mongoose';
 import { engine } from 'express-handlebars';
@@ -8,7 +9,7 @@ import { Server } from 'socket.io'
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import mongoStore from 'connect-mongo';
-
+import errorHandler from './middlewares/errorHandler.js'
 
 import productsRouter from './routes/productsRouter.js'
 import cartsRouter from './routes/cartsRouter.js'
@@ -32,15 +33,9 @@ app.use(session({
     saveUninitializad: false    
 })) // Session
 
-// Express ON
-const httpServer = app.listen(8081, () => {
-    console.log('Listening on port 8081');
-});
-
 mongoose.connect(process.env.MONGO_DB_URI)
 
 // Express + WebSocket
-const socketServer = new Server(httpServer);
 const viewsPath = resolve('src/views');
 
 // Handlebars
@@ -58,6 +53,17 @@ app.use('/api/users', usersRouter);
 app.use('/api/session', sessionRouter);
 app.use('/', viewsRouter)
 
+
+// Middleware de manejo de erorres
+app.use(errorHandler);
+
+// Express ON
+const httpServer = app.listen(8081, () => {
+    console.log('Listening on port 8081');
+});
+
+const socketServer = new Server(httpServer);
+
 socketServer.on('connection', socket => {
 
     console.log('Cliente conectado')
@@ -70,6 +76,7 @@ socketServer.on('connection', socket => {
 
     });
 })
+
 
 export { socketServer }; 
 

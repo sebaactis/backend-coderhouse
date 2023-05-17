@@ -4,10 +4,10 @@ import { create, deleteOne, getAll, getOne, update } from '../controllers/usersC
 
 const usersRouter = Router();
 
-usersRouter.get('/', auth, getAll)
+usersRouter.get('/', auth,  getAll)
 usersRouter.get('/:email', auth, getOne);
-usersRouter.post('/', auth, create);
-usersRouter.put('/:uid', auth, update);
-usersRouter.delete('/:uid', auth, deleteOne);
+usersRouter.post('/', auth,  create);
+usersRouter.put('/:email', auth,  update);
+usersRouter.delete('/:email', auth,  deleteOne);
 
 export default usersRouter;

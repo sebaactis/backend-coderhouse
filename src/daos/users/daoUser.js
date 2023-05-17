@@ -20,49 +20,46 @@ class daoUserMongoose {
     };
 
     async getUsers() {
-        try {
-            const users = await userModel.find();
-            return users
+
+        const users = await userModel.find();
+
+        if (!users) {
+            throw new Error("Users not found");
         }
 
-        catch {
-            throw new Error("We cant show the users, try again");
-        }
+        return users
     };
 
     async getOneUser(email) {
-        try {
-            const user = await userModel.findOne({ email });
+        const user = await userModel.findOne({ email });
 
-            if (!user) {
-                return "User not exist";
-            }
-
-            return user
+        if (!user) {
+            throw new Error("User Not Found");;
         }
-        catch {
-            throw new Error("We cant show the user, try again");
-        }
+        return user
     }
 
     async updateUser(email, data) {
-        try {
-            const user = await userModel.updateOne({ email }, data);
-            return user
+
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            throw new Error("User Not Found")
         }
-        catch {
-            return "We cant update"
-        }
+
+        const userUpdate = await userModel.updateOne({ email }, data);
+        return userUpdate
     }
 
     async deleteUser(email) {
-        try {
-            const userDeleted = await userModel.deleteOne({ email })
-            return userDeleted
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            throw new Error("User Not Found")
         }
-        catch {
-            return "We cant delete"
-        }
+
+        const userDeleted = await userModel.deleteOne({ email })
+        return userDeleted
     }
 
 }

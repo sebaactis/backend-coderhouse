@@ -2,47 +2,65 @@ import UserManager from '../managers/UserManager.js'
 
 const manager = new UserManager();
 
-export const getAll = async (req, res) => {
-    
-    let users = await manager.getUsers();
+export const getAll = async (req, res, next) => {
 
-    console.log(users)
+    try {
+        let users = await manager.getUsers();
+        res.status(200).json({ message: "success", payload: users })
+    }
+    catch (e) {
+        next(e);
+    }
 
-    res.status(200).json({message: "success", payload: users})
 }
 
-export const getOne = async (req, res) => {
+export const getOne = async (req, res, next) => {
 
-    const email = req.params.email
+    try {
+        const email = req.params.email
+        let user = await manager.getOneUser(email);
+        res.status(200).json({ message: "success", payload: user })
+    }
+    catch (e) {
+        next(e);
+    }
 
-    let user = await manager.getOneUser(email);
-
-    res.status(200).json({message: "success", payload: user})
 };
 
 export const create = async (req, res) => {
-    
+
     await manager.addUser(req.body);
 
-    res.status(200).json({message: "success", payload: req.body })
+    res.status(200).json({ message: "success", payload: req.body })
 
 };
 
-export const update = async (req, res) => {
+export const update = async (req, res, next) => {
 
-    let email = req.params.uid
+    let email = req.params.email
     let data = req.body;
 
-    await manager.updateUser(email, data)
+    try {
+        await manager.updateUser(email, data)
+        res.status(200).json({ message: "User updated", payload: data })
+    }
+    catch (e) {
+        next(e)
+    }
 
-    res.status(200).json({message: "User updated", payload: data})
+
 };
 
-export const deleteOne = async (req, res) => {
+export const deleteOne = async (req, res, next) => {
 
-    let email = req.params.uid
+    let email = req.params.email
 
-    await manager.deleteUser(email)
-
-    res.status(200).json({message: "User deleted"});
+    try {
+        await manager.deleteUser(email)
+        res.status(200).json({ message: "User deleted" });
+    }
+    catch (e) {
+        next(e);
+    }
+    
 };
