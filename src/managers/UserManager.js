@@ -1,5 +1,5 @@
 import daoUserMongoose from '../daos/users/daoUser.js';
-
+import bcrypt from 'bcrypt';
 class UserManager {
 
     constructor() {
@@ -7,13 +7,14 @@ class UserManager {
     }
 
     async addUser(user) {
-        try {
-            let newUser = await this.dao.addUser(user)
+
+            const payload = {
+                ...user,
+                password: await bcrypt.hash(user.password, 10)
+            }
+
+            let newUser = await this.dao.addUser(payload)
             return newUser;
-        }
-        catch {
-            return "We cant add user, try again"
-        }
     };
 
     async getUsers() { 

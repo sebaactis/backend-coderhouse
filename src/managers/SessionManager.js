@@ -36,17 +36,9 @@ class SessionManager {
 
     async forgotPassword(email, password) {
         const manager = new UserManager();
-
         const user = await manager.getOneUser(email);
 
         password = await bcrypt.hash(password, 10);
-
-        console.log(password)
-
-        if(!user) {
-            return "User doesnt exist"
-        }
-
         user.password = password;
 
         await manager.updateUser(email, user);

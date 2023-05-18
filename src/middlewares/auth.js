@@ -1,7 +1,7 @@
 const auth = (req, res, next) => {
 
-    if(req.session?.user?.email) {
-
+    if(req.session?.accessToken) {
+        
         return next();
     }
 

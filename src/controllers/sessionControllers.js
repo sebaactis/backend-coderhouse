@@ -1,10 +1,9 @@
 import SessionManager from "../managers/SessionManager.js";
 import { generateToken } from "../utils/index.js";
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
 
     try {
-
         const { email, password } = req.body
         const manager = new SessionManager();
 
@@ -17,16 +16,16 @@ export const login = async (req, res) => {
         /* req.session.user = { email }; */
         const accessToken = await generateToken(user);
 
+        req.session.accessToken = accessToken;
+
         res.send({ accessToken, message: 'Login success!' });
         /* res.status(200).send({ message: "Login successfull" }); */
 
     }
-    
+
     catch (e) {
         next(e);
     }
-
-
 
 }
 
@@ -52,16 +51,17 @@ export const signup = async (req, res) => {
 
 };
 
-export const forgotPassword = async (req, res) => {
+export const forgotPassword = async (req, res, next) => {
 
-    const { email, password } = req.body;
-    const manager = new SessionManager();
-
-    await manager.forgotPassword(email, password);
-
-    res.status(200).json({ status: "success", message: "Password updated successfully" });
-
-
+    try {
+        const { email, password } = req.body;
+        const manager = new SessionManager();
+        await manager.forgotPassword(email, password);
+        res.status(200).json({ status: "success", message: "Password updated successfully" });
+    }
+    catch (e) {
+        next(e);
+    }
 }
 
 export const current = async (req, res) => {

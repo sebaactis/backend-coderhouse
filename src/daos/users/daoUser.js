@@ -3,7 +3,6 @@ import { userModel } from "../../models/users.model.js"
 class daoUserMongoose {
 
     async addUser(user) {
-        try {
             let newUser = await userModel.create(user);
 
             return {
@@ -12,11 +11,6 @@ class daoUserMongoose {
                 email: newUser.email,
                 age: newUser.age
             }
-        }
-
-        catch {
-            throw new Error("We cant add user, try again");
-        }
     };
 
     async getUsers() {

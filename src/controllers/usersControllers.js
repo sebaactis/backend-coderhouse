@@ -1,4 +1,6 @@
 import UserManager from '../managers/UserManager.js'
+import mailValidation from '../validations/mailValidation.js';
+import userValidation from '../validations/userValidation.js';
 
 const manager = new UserManager();
 
@@ -16,7 +18,10 @@ export const getAll = async (req, res, next) => {
 
 export const getOne = async (req, res, next) => {
 
+
+
     try {
+        await mailValidation.parseAsync(req.params);
         const email = req.params.email
         let user = await manager.getOneUser(email);
         res.status(200).json({ message: "success", payload: user })
@@ -27,11 +32,16 @@ export const getOne = async (req, res, next) => {
 
 };
 
-export const create = async (req, res) => {
+export const create = async (req, res, next) => {
 
-    await manager.addUser(req.body);
-
-    res.status(200).json({ message: "success", payload: req.body })
+    try {
+        await userValidation.parseAsync(req.body);
+        await manager.addUser(req.body);
+        res.status(200).json({ message: "success", payload: req.body })
+    }
+    catch (e) {
+        next(e);
+    } 
 
 };
 
@@ -62,5 +72,5 @@ export const deleteOne = async (req, res, next) => {
     catch (e) {
         next(e);
     }
-    
+
 };
