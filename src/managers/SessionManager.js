@@ -1,5 +1,5 @@
 import UserManager from './UserManager.js';
-import bcrypt from 'bcrypt'
+import { isValidPassword, createHash } from "../utils/index.js";
 
 class SessionManager {
 
@@ -12,7 +12,7 @@ class SessionManager {
         const manager = new UserManager();
         const user = await manager.getOneUser(email)
 
-        const isHashedPassword = await bcrypt.compare(password, user.password)
+        const isHashedPassword = await isValidPassword(password, user.password);
 
         if (!isHashedPassword) {
             return 'Login failed'
@@ -27,7 +27,7 @@ class SessionManager {
 
         const payload = {
             ...data,
-            password: await bcrypt.hash(data.password, 10)
+            password: await createHash(data.password)
         }
 
         const user = await manager.addUser(payload);
@@ -38,7 +38,7 @@ class SessionManager {
         const manager = new UserManager();
         const user = await manager.getOneUser(email);
 
-        password = await bcrypt.hash(password, 10);
+        password = await createHash(password)
         user.password = password;
 
         await manager.updateUser(email, user);

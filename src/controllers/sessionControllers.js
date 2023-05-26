@@ -18,6 +18,10 @@ export const login = async (req, res, next) => {
 
         req.session.accessToken = accessToken;
 
+        res.cookie('accessToken', accessToken, {
+            maxAge: 60*60*1000,
+            httpOnly: true
+        })
         res.send({ accessToken, message: 'Login success!' });
         /* res.status(200).send({ message: "Login successfull" }); */
 

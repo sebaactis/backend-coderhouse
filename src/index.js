@@ -16,8 +16,9 @@ import cartsRouter from './routes/cartsRouter.js'
 import viewsRouter from './routes/views.router.js'
 import usersRouter from './routes/usersRouter.js';
 import sessionRouter from './routes/sessionRouter.js';
+import rolesRouter from './routes/rolesRouter.js';
 
-
+    
 // Express
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -51,6 +52,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/session', sessionRouter);
+app.use('/api/roles', rolesRouter);
 app.use('/', viewsRouter)
 
 

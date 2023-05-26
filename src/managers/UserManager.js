@@ -1,5 +1,6 @@
 import daoUserMongoose from '../daos/users/daoUser.js';
-import bcrypt from 'bcrypt';
+import { createHash } from "../utils/index.js";
+
 class UserManager {
 
     constructor() {
@@ -10,7 +11,7 @@ class UserManager {
 
             const payload = {
                 ...user,
-                password: await bcrypt.hash(user.password, 10)
+                password: await createHash(user.password)
             }
 
             let newUser = await this.dao.addUser(payload)
