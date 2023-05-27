@@ -3,44 +3,34 @@ import { cartModel } from "../../models/carts.model.js";
 class daoCartMongoose {
 
     async newCart() {
-        try {
-            await cartModel.create({})
-        } 
-        catch {
-            throw new Error("Can't creat a new cart, please try again later")
-        }
+        const cart = await cartModel.create({})
+        return cart;
     }
 
     async getCartPopulate(id) {
-        try {
-            let cart = await cartModel.findOne({ _id: id }).populate('products.product')
-            return cart
-        }
 
-        catch (err) {
-            console.log(err)
+        const cart = await cartModel.findOne({ _id: id }).populate('products.product')
+
+        if(!cart) {
+            throw new Error('Cart Not Found')
         }
+        return cart
+
     }
 
     async getCart(id) {
-        try {
-            let cart = await cartModel.findOne({ _id: id })
-            return cart
-        }
+        const cart = await cartModel.findOne({ _id: id })
 
-        catch (err) {
-            console.log(err)
+        if(!cart) {
+            throw new Error('Cart Not Found')
         }
+        
+        return cart
     }
 
     async updateCart(cartId, cart) {
-
-        try {
-            await cartModel.updateOne({ _id: cartId }, cart)
-        }
-        catch (err) {
-            console.log(err)
-        }
+            const newCart = await cartModel.updateOne({ _id: cartId }, cart)
+            return newCart
     }
 }
 

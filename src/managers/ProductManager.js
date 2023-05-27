@@ -7,65 +7,31 @@ class ProductManager {
     }
 
     async addProduct(product) {
-
-        try {
-            await this.dao.addProduct(product);
-        }
-
-        catch {
-            throw new Error("The product could not be added. Try again later")
-        }
-
+        const prod = await this.dao.addProduct(product);
+        return prod
     };
 
     async getProducts(sort, category, limit, page, stock) {
 
-        try {
-         const products = await this.dao.getProducts(sort, category, limit, page, stock);
-         return products
-        }
-
-        catch {
-            throw new Error("We could not receive the information. Try again later")
-        }
+        const products = await this.dao.getProducts(sort, category, limit, page, stock);
+        return products
     };
 
     async getProductById(id) {
-
-        try {
-            const product = await this.dao.getProductById(id)
-            return product
-        }
-
-        catch {
-            return "The product could not be retrieved. Try again"
-        }
-
+        const product = await this.dao.getProductById(id)
+        return product
     }
 
     async updateProd(id, data) {
 
-        try {
-            const productEdit = await this.dao.updateProd(id, data)
-            return productEdit
-        }
-
-        catch {
-            throw new Error("The product could not be updated. Try again")
-        }
+        const product = await this.dao.updateProd(id, data);
+        return product
 
     }
 
     async deleteProd(id) {
-
-        try {
             const product = await this.dao.deleteProd(id)
             return product
-        }
-
-        catch {
-            throw new Error("The product could not be deleted. Try again")
-        }
     }
 }
 

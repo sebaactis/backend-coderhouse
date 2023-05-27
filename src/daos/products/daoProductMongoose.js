@@ -4,14 +4,16 @@ class daoProductMongoose {
 
     async addProduct(product) {
 
-        try {
-            await productModel.create(product);
+        const products = await productModel.find();
+        const productCode = products.find(prod => prod.code === product.code)
+
+        if (productCode) {
+            throw new Error("Product Already Exists");
         }
 
-        catch {
-            throw new Error("The product could not be added. Try again later")
-        }
-    };
+        await productModel.create(product);
+
+    }
 
     async getProducts(sort, category, limit, page, stock) {
 
@@ -67,45 +69,42 @@ class daoProductMongoose {
 
     };
 
-
     async getProductById(id) {
+        const product = await productModel.findOne({ _id: id })
 
-        try {
-            const product = await productModel.findOne({ _id: id })
-            return product
+        if (!product) {
+            throw new Error('Product Not Found');
         }
 
-        catch {
-            return "The product could not be retrieved. Try again"
-        }
-
+        return product;
     }
 
     async updateProd(id, data) {
 
-        try {
-            const productEdit = await productModel.updateOne({ _id: id, }, data)
-            return productEdit
+        const product = await productModel.findOne({ _id: id })
+
+        if (!product) {
+            throw new Error('Product Not Found');
         }
 
-        catch {
-            throw new Error("The product could not be updated. Try again")
-        }
-
+        const productEdit = await productModel.updateOne({ _id: id, }, data)
+        return productEdit
     }
 
     async deleteProd(id) {
 
+        const product = await productModel.findOne({ _id: id })
 
-        try {
-            const product = await productModel.deleteOne({ _id: id })
-            return product
+        console.log(product)
+
+        if (!product) {
+            throw new Error('Product Not Found');
         }
 
-        catch {
-            throw new Error("The product could not be deleted. Try again")
-        }
+        const productDeleted = await productModel.deleteOne({ _id: id })
+        return productDeleted
     }
+
 }
 
 export default daoProductMongoose;

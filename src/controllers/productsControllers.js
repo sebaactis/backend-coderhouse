@@ -1,119 +1,85 @@
 import ProductManager from '../managers/ProductManager.js'
+import productValidation from '../validations/productValidation.js'
 
 const manager = new ProductManager();
 
-export const getAll = async (req, res) => {
+export const getAll = async (req, res, next) => {
 
-    let { limit, sort, category, page, stock } = req.query
-    sort = +sort
-    limit = +limit
-    page = +page
-    stock = +stock
+    try {
+        let { limit, sort, category, page, stock } = req.query
+        sort = +sort
+        limit = +limit
+        page = +page
+        stock = +stock
 
-    const products = await manager.getProducts(sort, category, limit, page, stock)
+        const products = await manager.getProducts(sort, category, limit, page, stock)
 
-    res.status(200).json({status: 'success', payload: products})
-
-
-    /* if (limit <= 0) {
-        return res.status(404).json({ message: 'number invalid' });
+        res.status(200).json({ status: 'success', payload: products })
     }
 
-    if (!limit) {
-        res.status(200).json({status:"success", payload: products});
-    } else {
-        res.status(200).json({status: "success", payload: products.slice(0, limit)}); 
-    } */
+    catch (e) {
+        next(e);
+    }
+
 }
 
-export const getOne = async (req, res) => {
+export const getOne = async (req, res, next) => {
 
-    const id = req.params.pid;
-
-    const validProd = await manager.getProductById(id)
-
-    if (validProd === null) {
-        res.status(404).json({ "error": "Product doesn't exist" });
-        return;
+    try {
+        const id = req.params.pid;
+        const product = await manager.getProductById(id)
+        res.status(200).json({ message: 'success', payload: product })
     }
-
-    res.status(200).json(validProd)
-};
-
-export const create = async (req, res) => {
-
-    const products = await manager.getProducts();
-
-    let product = req.body;
-    
-    const { title, description, code, price, status, stock, category, thumbnail } = product;
-
-    if (title === "" || description == "" || code == "" || price === "" || status === "" || stock === "" || category === "") {
-        res.status(404).json({ message: "One of the fields are empty" })
-        return;
+    catch (e) {
+        next(e);
     }
-
-    const productCode = products.find(prod => prod.code === product.code)
-
-    if(productCode) {
-        res.status(200).json({message: "We just have one product with this code, choose another one"})
-        return;
-    }
-
-    /* product.thumbnail = [req.file.path]
-    product.price = Number(product.price)
-    product.status = Boolean(product.status)
-    product.stock = Number(product.stock) */
-
-    await manager.addProduct(product);
-
-    res.status(201).json({ completed: "The product has been added", product });
-};
-
-export const update = async (req, res) => {
-
-    const products = await manager.getProducts();
-
-    let id = req.params.pid;
-    let data = req.body;
-
-    const { title, description, code, price, status, stock, category, thumbnail } = data;
-
-
-    if (title === "" || description == "" || code === "" || price === "" || status === "" || stock === "" || category === "") {
-        res.status(404).json({ message: "One of the fields are empty" })
-        return;
-    }
-
-    const productId = products.find(prod => prod.id === id)
-
-    if(!productId) {
-        res.status(404).json({message: 'Product not found'})
-        return;
-    }
-
-    await manager.updateProd(id, data)
-
-    res.status(200).json({ "message": `product ${id} has been edited`, data })
 
 };
 
-export const deleteOne = async (req, res) => {
+export const create = async (req, res, next) => {
 
-    const products = await manager.getProducts();
-
-    const id = req.params.pid;
-
-    const prodId = products.find(prod => prod.id === id)
-
-    if(!prodId) {
-        res.status(404).json({ message: 'Product not found'});
-        return;
+    try {
+        await productValidation.parseAsync(req.body);
+        const product = req.body;
+        await manager.addProduct(product)
+        res.status(201).json({ completed: "The product has been added", product });
     }
 
-    manager.deleteProd(id)
+    catch (e) {
+        next(e);
+    }
+};
 
-    res.status(200).json({ "message": `product ${id} has been deleted` })
+export const update = async (req, res, next) => {
+
+    try {
+        await productValidation.parseAsync(req.body);
+        let id = req.params.pid;
+        let data = req.body;
+
+        await manager.updateProd(id, data)
+
+        res.status(200).json({ "message": `product ${id} has been edited`, data })
+    }
+
+    catch (e) {
+        next(e);
+    }
+
+};
+
+export const deleteOne = async (req, res, next) => {
+
+    try {
+        const id = req.params.pid;
+        await manager.deleteProd(id)    
+        res.status(200).json({ "message": `product ${id} has been deleted` })
+    }
+
+    catch (e) {
+        next(e);
+    }
+
 };
 
 

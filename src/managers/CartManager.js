@@ -1,4 +1,3 @@
-/* import fs from 'fs'; */
 import daoCartMongoose from '../daos/carts/daoCartMongoose.js'
 import daoProductMongoose from '../daos/products/daoProductMongoose.js';
 
@@ -11,95 +10,86 @@ class CartManager {
 
     async newCart() {
 
-        try {
-            await this.daoCart.newCart();
-        }
+        const cart = await this.daoCart.newCart();
+        return cart;
 
-        catch {
-            throw new Error('Error trying to create Cart');
-        }
     }
 
     async getCartProducts(id) {
-
-        try {
-            return  this.daoCart.getCartPopulate(id);
-        }
-
-        catch {
-            return 'Error trying to get Cart'
-        }
+        const cart = this.daoCart.getCartPopulate(id);
+        return cart;
     }
 
     async addProductCart(cartId, prodId) {
 
         let prodExis = await this.daoProduct.getProductById(prodId)
 
-        if(!prodExis) {
-            return 'Product not found'
+        if (!prodExis) {
+            return 'Product Not Found'
         }
 
         let cart = await this.daoCart.getCart(cartId)
 
-        if(!cart) {
-            return "Cart not found";
+        if (!cart) {
+            return "Cart Not Found";
         }
+
         let products = cart.products
 
-        products.push({product: prodId, quantity: 1})
+        products.push({ product: prodId, quantity: 1 })
         return await this.daoCart.updateCart(cartId, cart)
-        
+
     }
 
     async updateCart(cartId, newCart) {
 
         let cart = await this.daoCart.getCart(cartId)
 
-        if(!cart) {
-            return 'Cart not found'
+        if (!cart) {
+            throw new Error('Cart Not Found')
         }
 
         cart.products = newCart
-        
-        await this.daoCart.updateCart(cartId, cart)
+
+        return await this.daoCart.updateCart(cartId, cart)
     }
 
-    async updateOneProductCart (cartId, prodId, newQuantity) {
+    async updateOneProductCart(cartId, prodId, newQuantity) {
         let cart = await this.daoCart.getCart(cartId)
 
-        if(!cart) {
-            return 'Cart not found'
+        if (!cart) {
+            throw new Error('Cart Not Found')
         }
 
         let products = cart.products
         let prod = products.find(prod => prod.product === prodId)
+
+        if (!prod) {
+            throw new Error('Product Not Found On The Cart')
+        }
         prod.quantity = newQuantity.quantity
 
-
-
-        await this.daoCart.updateCart(cartId, cart)
-        
+        return await this.daoCart.updateCart(cartId, cart)
     }
 
     async removeFromCart(cartId, prodId) {
         let cart = await this.daoCart.getCart(cartId)
 
-        if(!cart) {
-            return 'Cart not found'
+        if (!cart) {
+            throw new Error('Cart Not Found')
         }
 
-        cart.products = await cart.products.filter(prod => prod.product !== prodId)  
-
+        cart.products = await cart.products.filter(prod => prod.product !== prodId)
         await this.daoCart.updateCart(cartId, cart)
-    
+
     }
 
     async removeAllCart(cartId) {
 
         let cart = await this.daoCart.getCart(cartId)
 
-        if(!cart) {
-            return 'Cart not found'
+        if (!cart) {
+            throw new Error('Cart Not Found')
         }
 
         cart.products = [];
