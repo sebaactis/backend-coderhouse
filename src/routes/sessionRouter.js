@@ -3,6 +3,7 @@ import auth from '../middlewares/auth.js';
 import authToken from '../middlewares/authToken.js';
 import { current, forgotPassword, login, logout, signup } from '../controllers/sessionControllers.js';
 
+
 const sessionRouter = Router();
 
 sessionRouter.post('/login', login)

@@ -4,27 +4,24 @@ import { generateToken } from "../utils/index.js";
 export const login = async (req, res, next) => {
 
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body;
         const manager = new SessionManager();
 
-        let user = await manager.login(email, password);
+        const user = await manager.login(email, password);
 
-        if (user === 'Login failed') {
-            return res.status(401).send({ message: "Login failed, password is incorrect" })
-        }
-
-        /* req.session.user = { email }; */
         const accessToken = await generateToken(user);
 
         req.session.accessToken = accessToken;
+        req.session.user = user;
 
         res.cookie('accessToken', accessToken, {
-            maxAge: 60*60*1000,
+            maxAge: 10000,
             httpOnly: true
         })
+        
         res.send({ accessToken, message: 'Login success!' });
-        /* res.status(200).send({ message: "Login successfull" }); */
 
+    
     }
 
     catch (e) {
@@ -46,10 +43,9 @@ export const logout = async (req, res) => {
 
 export const signup = async (req, res) => {
 
-    const manager = new SessionManager();
-    const data = req.body;
+    const manager = new SessionManager()
 
-    let user = await manager.signup(data);
+    let user = await manager.signup(req.body);
 
     res.status(201).json({ status: "success", user, message: "User added successfully" });
 
@@ -68,8 +64,21 @@ export const forgotPassword = async (req, res, next) => {
     }
 }
 
-export const current = async (req, res) => {
+export const current = async (req, res, next) => {
 
-    res.status(200).send({ status: 'Success', payload: req.user });
+    try {
+        const cookie = req.cookies.accessToken;
+
+        if (!cookie) {
+            throw new Error("Access Token Not Found")
+        }
+
+        res.status(200).send({ status: 'Success', user: 'El usuario es: ' + req.user._doc.email });
+
+    }
+
+    catch (e) {
+        next(e)
+    }
 
 };

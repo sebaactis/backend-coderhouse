@@ -8,7 +8,8 @@ const userSchema = new Schema({
     email: { type: Schema.Types.String, required: true, unique: true },
     age: { type: Schema.Types.Number },
     password: { type: Schema.Types.String },
-    role: { type: Schema.Types.ObjectId, index: true, ref: 'roles' },
+    cart: { type: Schema.Types.ObjectId, ref: 'carts'},
+    role: { type: Schema.Types.ObjectId, default: '64775b936c021a596c3ceafa', ref: 'roles' },
 })
 
 userSchema.pre('find', function () {
@@ -17,6 +18,14 @@ userSchema.pre('find', function () {
 
 userSchema.pre('findOne', function () {
     this.populate(['role']);
+});
+
+userSchema.pre('find', function () {
+    this.populate(['cart']);
+});
+
+userSchema.pre('findOne', function () {
+    this.populate(['cart']);
 });
 
 export const userModel = mongoose.model(usersCollection, userSchema);

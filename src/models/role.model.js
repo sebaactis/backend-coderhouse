@@ -4,8 +4,7 @@ import paginate from "mongoose-paginate-v2";
 const roleCollection = 'roles';
 
 const RoleSchema = new Schema({
-  name: { type: Schema.Types.String, required: true, unique: true},
-  permissions: [{ type: Schema.Types.String }]
+  name: { type: Schema.Types.String, required: true, unique: true}
 });
 
 RoleSchema.plugin(paginate);

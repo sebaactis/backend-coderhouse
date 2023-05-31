@@ -5,7 +5,7 @@ const auth = (req, res, next) => {
         return next();
     }
 
-    return res.status(401).send({message: "No authorized"});
+    return res.status(401).send({message: "You dont logged in!"});
 }
 
 export default auth;

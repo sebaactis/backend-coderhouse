@@ -9,12 +9,7 @@ class UserManager {
 
     async addUser(user) {
 
-            const payload = {
-                ...user,
-                password: await createHash(user.password)
-            }
-
-            let newUser = await this.dao.addUser(payload)
+            let newUser = await this.dao.addUser(user)
             return newUser;
     };
 

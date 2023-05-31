@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import auth from '../middlewares/auth.js';
+import authorization from '../middlewares/authorization.js';
 import { create, deleteOne, getAll, getOne, update } from '../controllers/usersControllers.js';
 
 const usersRouter = Router();
 
-usersRouter.get('/', auth,  getAll)
-usersRouter.get('/:email', auth, getOne);
-usersRouter.post('/', auth,  create);
-usersRouter.put('/:email', auth,  update);
-usersRouter.delete('/:email', auth,  deleteOne);
+usersRouter.get('/', authorization('admin'),  getAll)
+usersRouter.get('/:email', authorization('admin'), getOne);
+usersRouter.post('/', authorization('admin'),  create);
+usersRouter.put('/:email', authorization('admin'),  update);
+usersRouter.delete('/:email', authorization('admin'),  deleteOne);
 
 export default usersRouter;

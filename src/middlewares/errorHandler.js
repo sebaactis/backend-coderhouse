@@ -2,12 +2,15 @@ const errorHandler = (err, req, res, next) => {
   if (err?.message.includes('Not Found')) {
     console.error(err.stack);
     return res.status(400).json({ message: err.message });
-  } 
+  }
   else if (err.message.includes('Already Exists')) {
     console.error(err.stack);
     return res.status(400).json({ message: err.message });
   }
-
+  else if (err.message.includes('invalid')) {
+    console.error(err.stack);
+    return res.status(400).json({ message: err.message });
+  }
   else if (err?.name.includes('ZodError')) {
     console.error(err.stack);
     return res.status(400).json({ message: err.issues });

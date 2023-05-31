@@ -1,5 +1,5 @@
 import UserManager from './UserManager.js';
-import { isValidPassword, createHash } from "../utils/index.js";
+import {createHash, isValidPassword} from "../utils/index.js";
 
 class SessionManager {
 
@@ -12,10 +12,10 @@ class SessionManager {
         const manager = new UserManager();
         const user = await manager.getOneUser(email)
 
-        const isHashedPassword = await isValidPassword(password, user.password);
+        const isHashedPassword = await isValidPassword(user, password);
 
-        if (!isHashedPassword) {
-            return 'Login failed'
+        if(!isHashedPassword) {
+            throw new Error('Password invalid');
         }
 
         return user;

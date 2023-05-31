@@ -8,8 +8,7 @@ class daoRoles {
 
         return {
             id: newRole._id,
-            name: newRole.name,
-            permissions: newRole.permissions
+            name: newRole.name
         }
     };
 
