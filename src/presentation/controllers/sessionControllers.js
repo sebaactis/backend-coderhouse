@@ -18,10 +18,10 @@ export const login = async (req, res, next) => {
             maxAge: 10000,
             httpOnly: true
         })
-        
+
         res.send({ accessToken, message: 'Login success!' });
 
-    
+
     }
 
     catch (e) {
