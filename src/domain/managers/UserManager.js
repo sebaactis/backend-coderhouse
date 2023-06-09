@@ -1,5 +1,4 @@
-import daoUserMongoose from '../daos/users/daoUser.js';
-import { createHash } from "../utils/index.js";
+import daoUserMongoose from '../../data/daos/users/daoUser.js';
 
 class UserManager {
 

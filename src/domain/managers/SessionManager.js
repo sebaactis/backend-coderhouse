@@ -1,5 +1,5 @@
 import UserManager from './UserManager.js';
-import {createHash, isValidPassword} from "../utils/index.js";
+import { createHash, isValidPassword } from "../../utils/index.js";
 
 class SessionManager {
 

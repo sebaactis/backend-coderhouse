@@ -9,14 +9,14 @@ import { Server } from 'socket.io'
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import mongoStore from 'connect-mongo';
-import errorHandler from './middlewares/errorHandler.js'
+import errorHandler from './presentation/middlewares/errorHandler.js';
 
-import productsRouter from './routes/productsRouter.js'
-import cartsRouter from './routes/cartsRouter.js'
-import viewsRouter from './routes/views.router.js'
-import usersRouter from './routes/usersRouter.js';
-import sessionRouter from './routes/sessionRouter.js';
-import rolesRouter from './routes/rolesRouter.js';
+import productsRouter from './presentation/routes/productsRouter.js'
+import cartsRouter from './presentation/routes/cartsRouter.js'
+import viewsRouter from './presentation/routes/views.router.js'
+import usersRouter from './presentation/routes/usersRouter.js';
+import sessionRouter from './presentation/routes/sessionRouter.js';
+import rolesRouter from './presentation/routes/rolesRouter.js';
 
     
 // Express

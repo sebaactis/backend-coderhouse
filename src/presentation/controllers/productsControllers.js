@@ -1,5 +1,5 @@
-import ProductManager from '../managers/ProductManager.js'
-import productValidation from '../validations/productValidation.js'
+import ProductManager from '../../domain/managers/ProductManager.js'
+import productValidation from '../../domain/validations/productValidation.js'
 
 const manager = new ProductManager();
 

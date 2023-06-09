@@ -1,6 +1,6 @@
-import UserManager from '../managers/UserManager.js'
-import mailValidation from '../validations/mailValidation.js';
-import userValidation from '../validations/userValidation.js';
+import UserManager from '../../domain/managers/UserManager.js'
+import mailValidation from '../../domain/validations/mailValidation.js';
+import userValidation from '../../domain/validations/userValidation.js';
 
 const manager = new UserManager();
 

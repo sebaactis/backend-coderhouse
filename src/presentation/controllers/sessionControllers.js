@@ -1,5 +1,5 @@
-import SessionManager from "../managers/SessionManager.js";
-import { generateToken } from "../utils/index.js";
+import SessionManager from "../../domain/managers/SessionManager.js";
+import { generateToken } from "../../utils/index.js";
 
 export const login = async (req, res, next) => {
 
