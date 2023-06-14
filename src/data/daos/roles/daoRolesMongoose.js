@@ -1,6 +1,6 @@
 import { roleModel } from '../../models/role.model.js'
 
-class daoRoles {
+class daoRolesMongoose {
 
     async addRole(role) {
 
@@ -60,4 +60,4 @@ class daoRoles {
 
 }
 
-export default daoRoles;
+export default daoRolesMongoose;

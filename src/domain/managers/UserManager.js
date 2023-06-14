@@ -1,9 +1,9 @@
-import daoUserMongoose from '../../data/daos/users/daoUser.js';
+import container from '../../container.js';
 
 class UserManager {
 
     constructor() {
-        this.dao = new daoUserMongoose();
+        this.dao = container.resolve('UserDao');
     }
 
     async addUser(user) {

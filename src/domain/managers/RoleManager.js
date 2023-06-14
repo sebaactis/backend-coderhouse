@@ -1,9 +1,9 @@
-import daoRoles from '../../data/daos/roles/daoRoles.js';
+import container from '../../container.js';
 
 class RoleManager {
 
     constructor() {
-        this.dao = new daoRoles();
+        this.dao = container.resolve('RolesDao');
     }
 
     async addRole(role) {

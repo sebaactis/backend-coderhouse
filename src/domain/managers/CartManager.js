@@ -1,11 +1,10 @@
-import daoCartMongoose from '../../data/daos/carts/daoCartMongoose.js'
-import daoProductMongoose from '../../data/daos/products/daoProductMongoose.js';
+import container from "../../container.js";
 
 class CartManager {
 
     constructor() {
-        this.daoCart = new daoCartMongoose();
-        this.daoProduct = new daoProductMongoose();
+        this.daoCart = container.resolve('CartDao');
+        this.daoProduct = container.resolve('ProductDao');
     }
 
     async newCart() {

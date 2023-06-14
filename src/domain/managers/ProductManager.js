@@ -1,9 +1,9 @@
-import daoProductMongoose from '../../data/daos/products/daoProductMongoose.js';
+import container from "../../container.js";
 
 class ProductManager {
 
     constructor() {
-        this.dao = new daoProductMongoose();
+        this.dao = container.resolve('ProductDao');
     }
 
     async addProduct(product) {

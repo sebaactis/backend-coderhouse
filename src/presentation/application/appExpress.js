@@ -24,7 +24,7 @@ class AppExpress {
     build() {
         this.app.use(session({
             store: mongoStore.create({
-                mongoUrl: process.env.MONGO_DB_URI,
+                mongoUrl: process.env.DB_URI,
                 ttl: 50
             }),
             secret: 'CoderS3cR3tC0D3',
