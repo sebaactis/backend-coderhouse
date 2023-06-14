@@ -3,7 +3,7 @@ import container from "../../container.js";
 class ProductManager {
 
     constructor() {
-        this.dao = container.resolve('ProductDao');
+        this.dao = container.resolve('repositoryProduct');
     }
 
     async addProduct(product) {

@@ -3,7 +3,7 @@ import container from '../../container.js';
 class UserManager {
 
     constructor() {
-        this.dao = container.resolve('UserDao');
+        this.dao = container.resolve('repositoryUser');
     }
 
     async addUser(user) {

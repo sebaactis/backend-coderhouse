@@ -3,8 +3,8 @@ import container from "../../container.js";
 class CartManager {
 
     constructor() {
-        this.daoCart = container.resolve('CartDao');
-        this.daoProduct = container.resolve('ProductDao');
+        this.daoCart = container.resolve('repositoryCart');
+        this.daoProduct = container.resolve('repositoryProduct');
     }
 
     async newCart() {

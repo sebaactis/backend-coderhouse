@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
 const usersCollection = 'users';
 
@@ -27,5 +28,7 @@ userSchema.pre('find', function () {
 userSchema.pre('findOne', function () {
     this.populate(['cart']);
 });
+
+userSchema.plugin(paginate);
 
 export const userModel = mongoose.model(usersCollection, userSchema);

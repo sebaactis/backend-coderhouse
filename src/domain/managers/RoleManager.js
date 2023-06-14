@@ -3,7 +3,7 @@ import container from '../../container.js';
 class RoleManager {
 
     constructor() {
-        this.dao = container.resolve('RolesDao');
+        this.dao = container.resolve('repositoryRole');
     }
 
     async addRole(role) {
