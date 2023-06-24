@@ -5,7 +5,8 @@ const manager = new CartManager()
 export const create = async (req, res, next) => {
 
     try {
-        await manager.newCart();
+        const email = req.body.email
+        await manager.newCart(email);
         res.status(201).json({ "message": "Cart created successfully" })
     }
 
@@ -34,7 +35,7 @@ export const addToCart = async (req, res, next) => {
     try {
         const cartId = req.params.cid;
         const prodId = req.params.pid;
-        let addProd = await manager.addProductCart(cartId, prodId);
+        await manager.addProductCart(cartId, prodId);
         res.status(200).json({ message: `Product ${prodId} has been added to cart` });
     }
     catch (e) {
@@ -100,4 +101,15 @@ export const removeAllCart = async (req, res, next) => {
         next(e);
     }
 
+}
+
+export const purchase = async (req, res, next) => {
+    try {
+        const cartId = req.params.cid
+        const compra = await manager.purchase(cartId)
+        res.status(200).json({ message: "The purchase has been successfully", status: compra })
+    }
+    catch (e) {
+        next(e);
+    }
 }

@@ -8,13 +8,15 @@ const cartsSchema = mongoose.Schema({
             {
                 product: {
                     type: String,
-                    ref: "products"
+                    ref: 'products'
                 },
-                quantity: Number
+                quantity: Number,
+                totalPrice: Number,
             }
         ],
         default: []
-    }
+    },
+    email: String
 })
 
 cartsSchema.pre('find', function () {

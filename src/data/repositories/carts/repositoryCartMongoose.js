@@ -3,25 +3,27 @@ import { cartModel } from "../../models/carts.model.js";
 
 class repositoryCartMongoose {
 
-    async newCart() {
-        const document = await cartModel.create({})
+    async newCart(email) {
+        const document = await cartModel.create({ email })
 
         return new Cart({
             id: document._id,
-            products: document.products
+            products: document.products,
+            email: email
         })
     }
 
     async getCartPopulate(id) {
 
-        const document = await cartModel.findOne({ _id: id })
+        const document = await cartModel.findOne({ _id: id }).populate('products')
 
         if (!document) {
             throw new Error('Cart Not Found')
         }
         return new Cart({
             id: document._id,
-            products: document.products
+            products: document.products,
+            email: document.email
         })
 
     }
@@ -35,7 +37,8 @@ class repositoryCartMongoose {
 
         return new Cart({
             id: document._id,
-            products: document.products
+            products: document.products,
+            email: document.email
         })
     }
 
@@ -48,7 +51,8 @@ class repositoryCartMongoose {
 
         return new Cart({
             id: document._id,
-            products: document.products
+            products: document.products,
+            email: document.email
         })
     }
 }

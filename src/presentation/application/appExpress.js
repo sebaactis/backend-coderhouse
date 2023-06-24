@@ -9,6 +9,7 @@ import sessionRouter from '../../presentation/routes/sessionRouter.js';
 import rolesRouter from '../../presentation/routes/rolesRouter.js';
 import session from 'express-session';
 import mongoStore from 'connect-mongo';
+import nodemailer from 'nodemailer';
 
 class AppExpress {
 
@@ -22,6 +23,7 @@ class AppExpress {
     }
 
     build() {
+
         this.app.use(session({
             store: mongoStore.create({
                 mongoUrl: process.env.DB_URI,
@@ -38,6 +40,8 @@ class AppExpress {
         this.app.use('/api/roles', rolesRouter);
         this.app.use('/', viewsRouter)
         this.app.use(errorHandler);
+
+
 
     }
 
