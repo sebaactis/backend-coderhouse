@@ -153,10 +153,7 @@ class CartManager {
 
                 if (product) {
                     product.stock = product.stock - cartProd.quantity
-
-                    console.log(product)
-
-                    const newProduct = productManager.updateProd(product.id, product)
+                    productManager.updateProd(product.id, product)
                 }
             })
         }

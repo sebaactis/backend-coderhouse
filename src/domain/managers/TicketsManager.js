@@ -37,7 +37,7 @@ class TicketsManager {
             purchaser: email
         }
 
-        const result = await transport.sendMail({
+        await transport.sendMail({
             from: 'Compras Test test@gmail.com',
             to: email,
             subject: 'Su compra se ha realizado con exito!',
