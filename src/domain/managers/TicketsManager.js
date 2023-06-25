@@ -7,7 +7,7 @@ const transport = nodemailer.createTransport({
     port: 587,
     auth: {
         user: process.env.APP_EMAIL,
-        pass: process.env.APP_PASSWORDF
+        pass: process.env.APP_PASSWORD
     }
 })
 
@@ -38,7 +38,7 @@ class TicketsManager {
         }
 
         const result = await transport.sendMail({
-            from: 'Compras Test compras@gmail.com',
+            from: 'Compras Test test@gmail.com',
             to: email,
             subject: 'Su compra se ha realizado con exito!',
             html: `<div>

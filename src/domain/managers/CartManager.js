@@ -1,5 +1,6 @@
 import container from "../../container.js";
 import TicketsManager from "../managers/TicketsManager.js"
+import ProductManager from "../managers/ProductManager.js";
 
 class CartManager {
 
@@ -110,7 +111,8 @@ class CartManager {
 
     async purchase(cartId) {
 
-        const manager = new TicketsManager();
+        const ticketManager = new TicketsManager();
+        const productManager = new ProductManager();
 
         let getProducts = await this.daoProduct.getProducts()
         getProducts = getProducts.docs
@@ -126,6 +128,7 @@ class CartManager {
             return productStock ? productStock.stock : 0;
         }
 
+
         let cart = await this.daoCart.getCart(cartId)
         let { products, email } = cart;
 
@@ -137,8 +140,27 @@ class CartManager {
             products
         }
 
-        const ticket = await manager.create(validProducts, email)
+        const ticket = await ticketManager.create(validProducts, email)
         const newCart = await this.daoCart.updateCart(cartId, cart)
+
+        const changeStock = () => {
+            validProducts.forEach(async (cartProd) => {
+
+                let getProducts = await this.daoProduct.getProducts()
+                getProducts = getProducts.docs
+
+                const product = getProducts.find(prod => prod.id === cartProd.product)
+
+                if (product) {
+                    product.stock = product.stock - cartProd.quantity
+
+                    console.log(product)
+
+                    const newProduct = productManager.updateProd(product.id, product)
+                }
+            })
+        }
+        changeStock();
 
         return { ticket, newCart }
     }
