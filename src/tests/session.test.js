@@ -30,8 +30,8 @@ describe("Testing Session EndPoints Success", () => {
     })
 
     beforeEach(async function () {
-        this.timeout(2000);
-        await new Promise(resolve => setTimeout(resolve, 500))
+        this.timeout(3000);
+        await new Promise(resolve => setTimeout(resolve, 1000))
     });
 
     it("Creacion de cuenta en http://localhost:8081/api/session/signup", function () {
@@ -76,7 +76,6 @@ describe("Testing Session EndPoints Success", () => {
                 jwt = _body.accessToken;
             })
     })
-
 
     it('Current /api/sessions/current', function () {
 

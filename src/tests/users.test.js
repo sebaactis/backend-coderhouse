@@ -1,15 +1,15 @@
 import dotenv from 'dotenv'
 dotenv.config();
+import { faker } from '@faker-js/faker';
 
 import chai from 'chai';
 import supertest from 'supertest';
 import initServer from './index.js';
 
-
 const expect = chai.expect
 let jwt = "";
 
-describe("Testing Roles EndPoints Success", () => {
+describe("Testing Users EndPoints Success", () => {
 
     before(async function () {
 
@@ -18,7 +18,7 @@ describe("Testing Roles EndPoints Success", () => {
         this.requester = supertest.agent(application);
         this.app = app
         this.db = db;
-        this.id = "";
+        this.payload = "";
     });
 
     after(async function () {
@@ -34,7 +34,7 @@ describe("Testing Roles EndPoints Success", () => {
         await new Promise(resolve => setTimeout(resolve, 1000))
     });
 
-    it("Login de cuenta /api/session/login para autorizar en roles", function () {
+    it("Login de cuenta /api/sessions/login para autorizar en users", function () {
 
         const payload = {
             email: "sebaactis@gmail.com",
@@ -51,10 +51,11 @@ describe("Testing Roles EndPoints Success", () => {
                 expect(_body.message).to.be.equals("Login success!")
 
                 jwt = _body.accessToken;
+
             })
     })
 
-    it("Endpoint getRoles /api/roles", function () {
+    it("Endpoint getUsers /api/users", function () {
 
         const payload = {
             email: "sebaactis@gmail.com",
@@ -62,85 +63,86 @@ describe("Testing Roles EndPoints Success", () => {
         }
 
         return this.requester
-            .get("/api/roles")
+            .get("/api/users")
             .send(payload)
             .then(result => {
                 const { _body, status } = result;
 
                 expect(status).to.be.equals(200);
-                expect(_body.roles).to.be.an('object');
+                expect(_body.payload.users).to.be.an('array');
             }
             )
     })
 
-    it("Endpoint Create /api/roles", function () {
+    it("Endpoint addUser /api/user", function () {
 
-        const payload = {
-            name: "moderator",
+        this.payload = {
+            firstName: `${faker.person.firstName()}`,
+            lastName: `${faker.person.lastName()}`,
+            email: faker.internet.email(),
+            age: 20,
+            password: "12345678"
         }
 
         return this.requester
-            .post("/api/roles")
-            .send(payload)
+            .post("/api/users")
+            .send(this.payload)
             .then(result => {
                 const { _body, status } = result;
 
-                expect(status).to.be.equals(201)
-                expect(_body.payload.name).to.be.equals(payload.name);
-                this.id = _body.payload.id;
+                expect(status).to.be.equals(200)
+                expect(_body.payload.email).to.be.equals(this.payload.email)
             }
             )
     })
 
-    it("Endpoint getOne /api/roles/pid", function () {
+    it("Endpoint getUser /api/users/email", function () {
 
         const payload = {
-            id: "64775b936c021a596c3ceafa"
+            email: "sebaactis@gmail.com"
         }
 
         return this.requester
-            .get("/api/roles/64775b936c021a596c3ceafa")
-            .send(payload)
+            .get(`/api/users/${payload.email}`)
             .then(result => {
                 const { _body, status } = result;
 
-                expect(status).to.be.equals(200);
-                expect(_body.id).to.be.equals(payload.id);
+                expect(status).to.be.equals(200)
+                expect(_body.payload.email).to.be.equals(payload.email)
             }
             )
     })
 
-    it("Endpoint Update /api/roles/pid", function () {
+    it("Endpoint Update /api/users/email", function () {
 
         const payload = {
-            name: "Moderator edit"
+            age: 70
         }
 
         return this.requester
-            .put(`/api/roles/${this.id}`)
+            .put(`/api/users/${this.payload.email}`)
             .send(payload)
             .then(result => {
                 const { _body, status } = result;
 
                 expect(status).to.be.equals(200)
-                expect(_body.payload).to.be.equals("Role updated")
+                expect(_body.payload.age).to.be.equals(payload.age)
             }
             )
     })
 
-    it("Endpoint Delete /api/roles/pid", function () {
+    it("Endpoint Delete /api/users/email", function () {
 
         return this.requester
-            .delete(`/api/roles/${this.id}`)
+            .delete(`/api/users/${this.payload.email}`)
             .then(result => {
                 const { _body, status } = result;
 
                 expect(status).to.be.equals(200)
-                expect(_body.payload).to.be.equals("Role deleted")
+                expect(_body.message).to.be.equals("User deleted")
             }
             )
     })
 
 })
-
 

@@ -36,8 +36,8 @@ export const create = async (req, res, next) => {
 
     try {
         await userValidation.parseAsync(req.body);
-        await manager.addUser(req.body);
-        res.status(200).json({ message: "success", payload: req.body })
+        const newUser = await manager.addUser(req.body);
+        res.status(200).json({ message: "success", payload: newUser })
     }
     catch (e) {
         next(e);
