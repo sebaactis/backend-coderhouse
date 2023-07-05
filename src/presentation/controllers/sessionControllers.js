@@ -20,8 +20,6 @@ export const login = async (req, res, next) => {
         })
 
         res.send({ accessToken, message: 'Login success!' });
-
-
     }
 
     catch (e) {
@@ -67,13 +65,10 @@ export const forgotPassword = async (req, res, next) => {
 export const current = async (req, res, next) => {
 
     try {
-        const cookie = req.cookies.accessToken;
 
-        if (!cookie) {
-            throw new Error("Access Token Not Found")
-        }
+        const payload = req.body;
 
-        res.status(200).send({ status: 'Success', user: 'El usuario es: ' + req.user._doc.email });
+        res.status(200).send({ status: 'Success', payload: payload});
 
     }
 

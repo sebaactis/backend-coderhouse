@@ -23,14 +23,14 @@ export const getOne = async (req, res, next) => {
     catch (e) {
         next(e);
     }
-    
+
 };
 
 export const create = async (req, res, next) => {
     try {
-        const role = req.body;
-        await manager.addRole(role);
-        res.status(200).json({ message: 'success', role })
+        const roleData = req.body;
+        const role = await manager.addRole(roleData);
+        res.status(201).json({ message: 'success', payload: role })
     }
     catch (e) {
         next(e);
@@ -43,7 +43,7 @@ export const update = async (req, res, next) => {
         let id = req.params.pid;
         let data = req.body;
         await manager.updateRole(id, data);
-        res.status(200).json({ message: 'success', payload: 'Role updated'});
+        res.status(200).json({ message: 'success', payload: 'Role updated' });
     }
     catch (e) {
         next(e);
@@ -56,7 +56,7 @@ export const deleteOne = async (req, res, next) => {
     try {
         const id = req.params.pid;
         await manager.deleteRole(id);
-        res.status(200).json({ message: 'success', payload: 'Role deleted'});
+        res.status(200).json({ message: 'success', payload: 'Role deleted' });
     }
     catch (e) {
         next(e);
