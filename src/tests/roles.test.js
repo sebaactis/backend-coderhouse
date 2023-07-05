@@ -7,7 +7,6 @@ import supertest from 'supertest';
 import initServer from './index.js';
 
 const expect = chai.expect
-let jwt = "";
 
 describe("Testing Rols EndPoints Success", () => {
 
