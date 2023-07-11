@@ -145,3 +145,74 @@ describe("Testing Products EndPoints Success", () => {
     })
 
 })
+
+describe("Testing Products EndPoints Failed", () => {
+
+    before(async function () {
+
+        const { app, db } = await initServer();
+        const application = app.callback();
+        this.requester = supertest.agent(application);
+        this.app = app
+        this.db = db;
+        this.id = ""
+    });
+
+    after(async function () {
+        this.db.drop();
+        this.db.close();
+        this.requester.app.close(() => {
+            console.log('Conexión cerrada');
+        });
+    })
+
+    beforeEach(async function () {
+        this.timeout(3000);
+        await new Promise(resolve => setTimeout(resolve, 1000))
+    });
+
+    it("Login de cuenta /api/sessions/login para autorizar en users", function () {
+
+        const payload = {
+            email: "sebaactis@gmail.com",
+            password: "54891329"
+        };
+
+        return this.requester
+            .post("/api/session/login")
+            .send(payload)
+            .then(result => {
+                const { _body, status } = result;
+
+                expect(status).to.be.equals(200);
+                expect(_body.message).to.be.equals("Login success!")
+
+                jwt = _body.accessToken;
+
+            })
+    })
+
+    it("Endpoint create /api/products", function () {
+
+        const payload = {
+            title: faker.commerce.productName(),
+            description: faker.commerce.productDescription(),
+            code: 505,
+            price: 1200,
+            status: true,
+            stock: 80,
+            category: "Otros"
+        }
+
+        return this.requester
+            .post("/api/products")
+            .send(payload)
+            .then(result => {
+                const { status } = result;
+
+                expect(status).to.be.equals(400);
+            }
+            )
+    })
+
+})
