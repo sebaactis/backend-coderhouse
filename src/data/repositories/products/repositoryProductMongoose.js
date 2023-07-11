@@ -15,7 +15,7 @@ class repositoryProductMongoose {
         const document = await productModel.create(product);
 
         return new Product({
-            id: document.id,
+            id: document._id,
             title: document.title,
             description: document.description,
             code: document.code,

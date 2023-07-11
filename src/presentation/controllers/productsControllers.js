@@ -41,8 +41,9 @@ export const create = async (req, res, next) => {
     try {
         await productValidation.parseAsync(req.body);
         const product = req.body;
-        await manager.addProduct(product)
-        res.status(201).json({ completed: "The product has been added", product });
+        const newProduct = await manager.addProduct(product)
+
+        res.status(201).json({ completed: "The product has been added", newProduct });
     }
 
     catch (e) {
