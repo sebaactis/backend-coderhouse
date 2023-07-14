@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { addToCart, create, getCart, purchase, removeAllCart, removeFromCart, updateCart, updateOneProductCart } from '../controllers/cartsControllers.js';
-import authorization from '../middlewares/authorization.js';
 
 const cartsRouter = Router();
 
