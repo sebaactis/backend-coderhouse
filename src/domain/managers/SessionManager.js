@@ -1,5 +1,6 @@
 import UserManager from './UserManager.js';
-import { createHash, isValidPassword } from "../../utils/index.js";
+import { createHash, generateToken, isValidPassword } from "../../utils/index.js";
+import EmailManager from './EmailManager.js';
 
 class SessionManager {
 
@@ -14,7 +15,7 @@ class SessionManager {
 
         const isHashedPassword = await isValidPassword(user, password);
 
-        if(!isHashedPassword) {
+        if (!isHashedPassword) {
             throw new Error('Password invalid');
         }
 
@@ -34,15 +35,15 @@ class SessionManager {
         return user;
     };
 
-    async forgotPassword(email, password) {
+    async forgotPassword(email) {
         const manager = new UserManager();
         const user = await manager.getOneUser(email);
 
-        password = await createHash(password)
-        user.password = password;
+        const token = await generateToken(user)
 
-        await manager.updateUser(email, user);
-        return user;
+        const mailManager = new EmailManager();
+
+        const mail = await mailManager.send('forgotPassword.hbs', email, token)
 
     }
 }

@@ -52,10 +52,16 @@ export const signup = async (req, res) => {
 export const forgotPassword = async (req, res, next) => {
 
     try {
-        const { email, password } = req.body;
+        const { email } = req.body;
+
         const manager = new SessionManager();
-        await manager.forgotPassword(email, password);
-        res.status(200).json({ status: "success", message: "Password updated successfully" });
+
+        const newPassword = await manager.forgotPassword(email);
+
+        res.status(200).json({ status: "success" });
+
+
+
     }
     catch (e) {
         next(e);
@@ -68,7 +74,7 @@ export const current = async (req, res, next) => {
 
         const payload = req.body;
 
-        res.status(200).send({ status: 'Success', payload: payload});
+        res.status(200).send({ status: 'Success', payload: payload });
 
     }
 
