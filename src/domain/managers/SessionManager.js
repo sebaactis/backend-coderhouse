@@ -49,9 +49,21 @@ class SessionManager {
 
     }
 
-    async changePassword(password, confPassword, tokenConf, token) {
+    async changePassword(password, confPassword, tokenConf, token, username) {
         if (password === confPassword && token === tokenConf) {
-            return "password modificada"
+            
+            const manager = new UserManager();
+
+            password = await createHash(password);
+
+            const data = {
+                password: password
+            }
+
+            const updated = await manager.updateUser(username, data);
+
+            return updated
+
         }
 
         return "Algun dato es erroneo"

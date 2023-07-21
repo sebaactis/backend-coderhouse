@@ -83,13 +83,13 @@ export const updatePassword = async (req, res, next) => {
 export const changePassword = async (req, res, next) => {
 
     try {
-        const { password, confPassword, tokenConf, token } = req.body;
+        const { password, confPassword, tokenConf, token, username } = req.body;
 
         const manager = new SessionManager();
 
-        const change = await manager.changePassword(password, confPassword, tokenConf, token)
+        const change = await manager.changePassword(password, confPassword, tokenConf, token, username)
 
-        res.status(200).json({ status: 'success', message: change })
+        res.status(200).json({ status: 'success', message: change})
 
     }
     catch (e) {
