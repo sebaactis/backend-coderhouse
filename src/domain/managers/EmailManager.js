@@ -34,6 +34,9 @@ class EmailManager
         };
 
         await transporter.sendMail(mailOptions);
+
+        return {username, token}
+
     }
 }
 

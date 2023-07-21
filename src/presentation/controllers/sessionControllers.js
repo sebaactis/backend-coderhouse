@@ -56,11 +56,40 @@ export const forgotPassword = async (req, res, next) => {
 
         const manager = new SessionManager();
 
-        const newPassword = await manager.forgotPassword(email);
+        await manager.forgotPassword(email);
 
-        res.status(200).json({ status: "success" });
+        res.status(200).json({ status: 'success', message: "Email de recuperacion enviado" })
 
+    }
+    catch (e) {
+        next(e);
+    }
+}
 
+export const updatePassword = async (req, res, next) => {
+
+    try {
+        const token = req.query.token
+        const email = req.query.username
+
+        res.render('home', { username: email, token: token })
+
+    }
+    catch (e) {
+        next(e);
+    }
+}
+
+export const changePassword = async (req, res, next) => {
+
+    try {
+        const { password, confPassword, tokenConf, token } = req.body;
+
+        const manager = new SessionManager();
+
+        const change = await manager.changePassword(password, confPassword, tokenConf, token)
+
+        res.status(200).json({ status: 'success', message: change })
 
     }
     catch (e) {

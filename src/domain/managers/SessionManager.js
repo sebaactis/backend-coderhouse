@@ -45,6 +45,16 @@ class SessionManager {
 
         const mail = await mailManager.send('forgotPassword.hbs', email, token)
 
+        return mail
+
+    }
+
+    async changePassword(password, confPassword, tokenConf, token) {
+        if (password === confPassword && token === tokenConf) {
+            return "password modificada"
+        }
+
+        return "Algun dato es erroneo"
     }
 }
 
