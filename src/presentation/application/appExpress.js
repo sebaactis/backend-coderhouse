@@ -11,6 +11,7 @@ import session from 'express-session';
 import mongoStore from 'connect-mongo';
 import { engine } from 'express-handlebars';
 import { resolve } from 'path';
+import passwordRouter from '../routes/passwordRouter.js';
 
 class AppExpress {
 
@@ -50,6 +51,7 @@ class AppExpress {
         this.app.use('/api/users', usersRouter);
         this.app.use('/api/session', sessionRouter);
         this.app.use('/api/roles', rolesRouter);
+        this.app.use('/api/password', passwordRouter);
         this.app.use('/', viewsRouter)
         this.app.use(errorHandler);
     }

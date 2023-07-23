@@ -1,38 +1,46 @@
-<h3>¡Hola {{username}}!</h3>
+<h3>¡Hola!</h3>
 <p>Cambie su contraseña aqui: </p>
 
-<label for="password"> Contraseña </label><input id="password" type="text">
-<label for="confPassword"> Confirmar contraseña</label><input id="confPassword" type="text">
-<label for="tokenConf"> Ingrese su token</label><input id="tokenConf" type="text">
-<button data-id="{{token}}" username="{{username}}" id="enviar"> Enviar </button>
+<form method="POST" action="/api/password/changePassword">
+    <label for="password"> Contraseña </label><input id="password" type="text"> <br>
+    <label for="confPassword"> Confirmar contraseña</label><input id="confPassword" type="text"><br>
+    <button id="enviar"> Enviar </button>
+</form>
 
 <script>
     const button = document.getElementById("enviar");
 
     button.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        const queryString = window.location.search;
+        const params = new URLSearchParams(queryString);
+        const tokenValue = params.get('token');
+        const email = params.get('email');
+
+
         const password = document.getElementById("password").value;
         const confPassword = document.getElementById("confPassword").value;
-        const tokenConf = document.getElementById("tokenConf").value;
-        const token = event.target.getAttribute("data-id");
-        const username = event.target.getAttribute("username");
 
         const data = {
             password: password,
             confPassword: confPassword,
-            tokenConf: tokenConf,
-            token: token,
-            username: username
+            email: email
         }
 
-        console.log(data);
 
-        fetch("http://localhost:8081/api/session/changePassword", {
+        fetch("/api/password/changePassword", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                'Authorization': `Bearer ${tokenValue}`,
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(data)
         })
             .then(response => response.json())
             .then(responseData => {
+                alert("Password modificada")
                 console.log(responseData);
             })
             .catch(error => {

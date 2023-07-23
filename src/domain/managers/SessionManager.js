@@ -35,34 +35,21 @@ class SessionManager {
         return user;
     };
 
-    async forgotPassword(email) {
-        const manager = new UserManager();
-        const user = await manager.getOneUser(email);
+    async changePassword(password, confPassword, email) {
 
-        const token = await generateToken(user)
+        if (password === confPassword) {
 
-        const mailManager = new EmailManager();
-
-        const mail = await mailManager.send('forgotPassword.hbs', email, token)
-
-        return mail
-
-    }
-
-    async changePassword(password, confPassword, tokenConf, token, username) {
-        if (password === confPassword && token === tokenConf) {
-            
             const manager = new UserManager();
-
+            manager.getOneUser(email)
             password = await createHash(password);
 
             const data = {
                 password: password
             }
 
-            const updated = await manager.updateUser(username, data);
+            await manager.updateUser(email, data);
 
-            return updated
+            return "Password changed"
 
         }
 
