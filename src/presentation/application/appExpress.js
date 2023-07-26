@@ -12,6 +12,8 @@ import mongoStore from 'connect-mongo';
 import { engine } from 'express-handlebars';
 import { resolve } from 'path';
 import passwordRouter from '../routes/passwordRouter.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express'
 
 class AppExpress {
 
@@ -33,7 +35,24 @@ class AppExpress {
         this.app.set('view engine', 'handlebars');
         this.app.set('views', viewsPath);
 
+        const swaggerPath = resolve('docs/**/*.yaml')
+
+        const swaggerOptions = {
+            definition: {
+                openapi: '3.0.1',
+                info: {
+                    title: "Documentacion de la API",
+                    description: "Documentacion de la API"
+                }
+            },
+            apis: [swaggerPath]
+        }
+
+        const specs = swaggerJSDoc(swaggerOptions)
+        this.app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
     }
+
+
 
     build() {
 
@@ -45,7 +64,7 @@ class AppExpress {
             secret: 'CoderS3cR3tC0D3',
             resave: false,
             saveUninitializad: false
-        })) 
+        }))
         this.app.use('/api/products', productsRouter);
         this.app.use('/api/carts', cartsRouter);
         this.app.use('/api/users', usersRouter);

@@ -1,0 +1,192 @@
+paths:
+  /api/session/login:
+    post:
+      summary: Loguearse en el sistema
+      tags:
+      - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/loginUser'
+      responses:
+        "200":
+          description: Login success
+        "400":
+          description: Password invalid // User not found
+        "500":
+          description: Ocurrio un error
+
+
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+      - Products
+      responses:
+        "200":
+          description: Obtiene todos los productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "500":
+          description: Ocurrio un error
+    post:
+      summary: Crea un producto (Debes estar logueado con un usuario con permisos de administrador)
+      tags:
+      - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/createUser'
+      responses:
+        "201":
+          description: The product has been added
+        "400":
+          description: Product Already Exists
+        "401":
+          description: "No authorized"
+
+       
+  /api/products/{uid}:
+    get:
+      summary: Obtiene un producto a partir de su ObjectID
+      tags:
+      - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: ID del producto que se desea buscar
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: Obtiene el producto
+        "400":
+          description: Product Not Found  
+    put:
+      summary: Modifica un producto (Debes estar logueado con un usuario con permisos de administrador)
+      tags:
+      - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: ID del producto que se desea actualizar
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/createUser'
+      responses:
+        "200":
+          description: Product {uid} has been edited
+        "400":
+          description: Product Not Found
+        "401":
+          description: "No authorized"
+    delete:
+      summary: Elimina un producto (Debes estar logueado con un usuario con permisos de administrador)
+      tags:
+      - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: ID del producto que se desea eliminar
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: Product {uid} has been deleted
+        "400":
+          description: Product Not Found
+        "401":
+          description: "No authorized"
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID generado por Mongo
+        title:
+          type: string
+          description: Titulo del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        code:
+          type: string
+          description: Codigo del producto
+        price:
+          type: number
+          description: Precio del producto
+        status:
+          type: boolean
+          description: Si el producto esta activo (true) o no (false)
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+  requestBodies:
+    createUser:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Titulo del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        code:
+          type: string
+          description: Codigo del producto
+        price:
+          type: number
+          description: Precio del producto
+        status:
+          type: boolean
+          description: Si el producto esta activo (true) o no (false)
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+      example:
+        title: Campera Adidas
+        description: Campera adidas 1
+        code: ADC125
+        price: 600
+        status: true
+        stock: 100
+        category: Camperas
+    loginUser:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email que identifica el usuario
+        password:
+          type: string
+          description: Contraseña para ingresar
+      example:
+        email: sebaactis@gmail.com
+        password: "123"
+          
