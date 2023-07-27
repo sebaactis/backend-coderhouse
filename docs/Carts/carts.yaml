@@ -1,0 +1,90 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtener un carrito por su {cid}
+      tags:
+      - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito que se desea ver
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: Devuelvo el carrito con su email correspondiente
+        "400":
+          description: Cart Not Found
+        "500":
+          description: Ocurrio un error
+  /api/carts:
+    post:
+      summary: Crear un carrito
+      tags:
+      - Carts
+      responses:
+        "200":
+          description: Cart created successfully
+        "500":
+          description: Ocurrio un error
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agregar un producto a un carrito
+      tags:
+      - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito donde desea agregar un producto
+        schema:
+          $type: string
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto que desea agregar al carrito
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: Product {pid} has been added to cart
+        "400":
+          description: Product Not Found / Cart Not Found
+        "500":
+          description: Ocurrio un error
+  /api/carts/purchase/{cid}:
+    post:
+      summary: Realizar el pedido del carrito. Solo se acepta los productos que cuenten con stock suficiente
+      tags:
+      - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito con el que quiere realizar el proceso de compra
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: The purchase has been successfully
+        "400":
+          description: Cart Not Found
+        "500":
+          description: Ocurrio un error
+
+components:
+  schemas:
+    Cart:
+      type: Object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID generado por Mongo
+        products:
+          type: array
+          description: Array de productos
+        email:
+          type: string
+          description: Email asignado a ese carrito
+      
