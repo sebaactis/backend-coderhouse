@@ -41,8 +41,8 @@ class AppExpress {
             definition: {
                 openapi: '3.0.1',
                 info: {
-                    title: "Documentacion de la API",
-                    description: "Documentacion de la API"
+                    title: "Documentacion API de E-Commerce Proyecto de Coderhouse",
+                    description: "Documentacion para poder probar la API"
                 }
             },
             apis: [swaggerPath]

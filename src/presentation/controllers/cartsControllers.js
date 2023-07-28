@@ -67,7 +67,7 @@ export const updateOneProductCart = async (req, res, next) => {
         const newQuantity = req.body
 
         let cart = await manager.updateOneProductCart(cartId, prodId, newQuantity)
-        res.status(200).json({ message: "The quantity of this products has been updated in the cart" })
+        res.status(200).json({ message: "Product updated successfully" })
 
     }
     catch (e) {

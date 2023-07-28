@@ -18,6 +18,48 @@ paths:
           description: Cart Not Found
         "500":
           description: Ocurrio un error
+    put:
+      summary: Actualizar un carrito a traves de su {cid}
+      tags:
+      - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateCart'
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito que se desea ver
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: Cart updated successfully
+        "400":
+          description: Cart Not Found
+        "500":
+          description: Ocurrio un error
+    delete:
+      summary: Vaciar un carrito por su {cid}
+      tags:
+      - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito que se desea vaciar
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: The cart has been empty
+        "400":
+          description: Cart Not Found
+        "500":
+          description: Ocurrio un error
   /api/carts:
     post:
       summary: Crear un carrito
@@ -53,11 +95,71 @@ paths:
           description: Product Not Found / Cart Not Found
         "500":
           description: Ocurrio un error
+    put:
+      summary: Actualizar un producto {pid} de un carrito a traves de su {cid}
+      tags:
+      - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateOneProductCart'
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a actualizar
+        schema:
+          $type: string
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito a actualizar
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: Cart updated successfully
+        "400":
+          description: Cart Not Found / Product Not Found On The Cart
+        "500":
+          description: Ocurrio un error
+    delete:
+      summary: Eliminar un producto {pid} de un carrito a traves de su {cid}
+      tags:
+      - Carts
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto a eliminar
+        schema:
+          $type: string
+      - name: cid
+        in: path
+        required: true
+        description: ID del carrito donde se eliminara el producto
+        schema:
+          $type: string
+      responses:
+        "200":
+          description: Product deleted from the cart
+        "400":
+          description: Cart Not Found
+        "500":
+          description: Ocurrio un error
   /api/carts/purchase/{cid}:
     post:
       summary: Realizar el pedido del carrito. Solo se acepta los productos que cuenten con stock suficiente
       tags:
       - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateCart'
       parameters:
       - name: cid
         in: path
@@ -87,4 +189,25 @@ components:
         email:
           type: string
           description: Email asignado a ese carrito
-      
+  requestBodies:
+    updateCart:
+      type: object
+      properties:
+        product:
+          type: string
+          description: ID del producto (hace referencia a los ObjectID de los productos existentes)
+        quantity:
+          type: string
+          description: Cantidad actual del producto en el carrito
+      example:
+        product: 644a7811ad1ce3a3ac89a9f8
+        quantity: 5
+    updateOneProductCart:
+      type: object
+      properties:
+        quantity:
+          type: string
+          description: Cantidad actual del producto en el carrito
+      example:
+        quantity: 5
+         
