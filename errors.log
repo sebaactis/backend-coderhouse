@@ -1,0 +1,5 @@
+error: Error: Product Not Found
+    at repositoryProductMongoose.getProductById (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/data/repositories/products/repositoryProductMongoose.js:88:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ProductManager.getProductById (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/ProductManager.js:21:25)
+    at async getOne (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/productsControllers.js:30:25)

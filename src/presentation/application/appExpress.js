@@ -14,6 +14,7 @@ import { resolve } from 'path';
 import passwordRouter from '../routes/passwordRouter.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
+import { addLogger } from '../../utils/logger.js';
 
 class AppExpress {
 
@@ -25,9 +26,10 @@ class AppExpress {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(cookieParser()); // Cookies
+        this.app.use(addLogger);
 
+        // Handlebars
         const viewsPath = resolve('src/presentation/views');
-
         this.app.engine('handlebars', engine({
             layoutsDir: `${viewsPath}/layout`,
             defaultLayout: `${viewsPath}/layout/main.handlebars`
@@ -35,8 +37,8 @@ class AppExpress {
         this.app.set('view engine', 'handlebars');
         this.app.set('views', viewsPath);
 
+        // Swagger
         const swaggerPath = resolve('docs/**/*.yaml')
-
         const swaggerOptions = {
             definition: {
                 openapi: '3.0.1',
