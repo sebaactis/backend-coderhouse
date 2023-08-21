@@ -15,10 +15,10 @@ import passwordRouter from '../routes/passwordRouter.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express'
 import { addLogger } from '../../utils/logger.js';
+import CronManager from '../../domain/managers/CronManager.js';
 
+const manager = new CronManager();
 class AppExpress {
-
-
 
     init() {
 
@@ -52,6 +52,9 @@ class AppExpress {
 
         const specs = swaggerJSDoc(swaggerOptions)
         this.app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+        
+        manager.deleteUsersByLastLogin();
+
     }
 
 
@@ -61,7 +64,7 @@ class AppExpress {
         this.app.use(session({
             store: mongoStore.create({
                 mongoUrl: process.env.DB_URI,
-                ttl: 50
+                ttl: 200
             }),
             secret: 'CoderS3cR3tC0D3',
             resave: false,
@@ -72,9 +75,10 @@ class AppExpress {
         this.app.use('/api/users', usersRouter);
         this.app.use('/api/session', sessionRouter);
         this.app.use('/api/roles', rolesRouter);
-        this.app.use('/api/password', passwordRouter);
+        this.app.use('/api/password', passwordRouter);  
         this.app.use('/', viewsRouter)
         this.app.use(errorHandler);
+
     }
 
     callback() {

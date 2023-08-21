@@ -32,8 +32,6 @@ export const changePassword = async (req, res, next) => {
     try {
         const { password, confPassword, email } = req.body;
 
-        console.log(password, confPassword, email);
-
         const manager = new SessionManager();
 
         const change = await manager.changePassword(password, confPassword, email)

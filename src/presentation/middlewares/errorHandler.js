@@ -17,7 +17,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   req.logger.error(err.stack);
-  res.status(500).json({ message: 'Ocurrió un error' });
+  res.status(500).json({ message: err.message });
 };
 
 export default errorHandler;

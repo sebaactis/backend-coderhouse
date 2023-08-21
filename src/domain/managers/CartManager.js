@@ -55,6 +55,12 @@ class CartManager {
 
     async updateCart(cartId, newCart) {
 
+        let prodExis = await this.daoProduct.getProductById(prodId)
+
+        if (!prodExis) {
+            return 'Product Not Found'
+        }
+
         let cart = await this.daoCart.getCart(cartId)
 
         if (!cart) {
@@ -67,6 +73,14 @@ class CartManager {
     }
 
     async updateOneProductCart(cartId, prodId, newQuantity) {
+        let prodExis = await this.daoProduct.getProductById(prodId)
+
+        if (!prodExis) {
+            return 'Product Not Found'
+        }
+
+        console.log(prodExis);
+
         let cart = await this.daoCart.getCart(cartId)
 
         if (!cart) {
@@ -76,10 +90,12 @@ class CartManager {
         let products = cart.products
         let prod = products.find(prod => prod.product === prodId)
 
+
         if (!prod) {
             throw new Error('Product Not Found On The Cart')
         }
         prod.quantity = newQuantity.quantity
+        prod.totalPrice = prod.quantity * prodExis.price
 
         return await this.daoCart.updateCart(cartId, cart)
     }

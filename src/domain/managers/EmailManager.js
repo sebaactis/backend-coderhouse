@@ -18,7 +18,6 @@ class EmailManager {
 
         const token = await generateToken(email);
 
-        console.log(token);
         const link = `http://localhost:8081/api/password/updatePassword?token=${token}&email=${email}`;
 
         const templatePath = resolve(`src/presentation/templates/${templateFile}`);

@@ -1,4 +1,5 @@
 import container from '../../container.js';
+import { createHash } from '../../utils/index.js';
 
 class UserManager {
 
@@ -8,12 +9,17 @@ class UserManager {
 
     async addUser(user) {
 
-            let newUser = await this.dao.addUser(user)
+        const payload = {
+                ...user,
+                password: await createHash(user.password)
+        }
+
+            let newUser = await this.dao.addUser(payload)
             return newUser;
     };
 
-    async getUsers() { 
-            let users = await this.dao.getUsers();
+    async getUsers(page) { 
+            let users = await this.dao.getUsers(page);
             return users
     };
 
@@ -32,6 +38,19 @@ class UserManager {
             return user
     }
 
+    async deleteUserByDate() {
+        const date = new Date();
+        const twoDaysAgo = new Date(date);
+        twoDaysAgo.setDate(date.getDate() - 2);
+
+        const newUsers = await this.dao.deleteUsersByDate(twoDaysAgo);
+
+        console.log(newUsers);
+
+        return newUsers
+    }
+
+  
 }
 
 export default UserManager;

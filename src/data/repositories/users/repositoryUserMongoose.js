@@ -13,13 +13,14 @@ class repositoryUserMongoose {
             lastName: document.lastName,    
             email: document.email,
             age: document.age,
-            role: document.role
+            role: document.role,
+            connection: document.connection
         })
     };
 
-    async getUsers() {
+    async getUsers(page) {
 
-        const userDocuments = await userModel.paginate({}, { limit: 10, page: 1 });
+        const userDocuments = await userModel.paginate({}, { limit: 50, page: page });
 
         const { docs, ...paginate } = userDocuments
 
@@ -33,7 +34,8 @@ class repositoryUserMongoose {
             lastName: document.lastName,
             email: document.email,
             age: document.age,
-            role: document.role
+            role: document.role,
+            connection: document.connection
         }))
 
         return {
@@ -58,7 +60,8 @@ class repositoryUserMongoose {
             email: document.email,
             age: document.age,
             role: document.role,
-            password: document.password
+            password: document.password,
+            connection: document.connection
         })
     }
 
@@ -78,7 +81,8 @@ class repositoryUserMongoose {
             lastName: document.lastName,
             email: document.email,
             age: document.age,
-            role: document.role
+            role: document.role,
+            connection: document.connection
         })
     }
 
@@ -97,8 +101,19 @@ class repositoryUserMongoose {
             lastName: document.lastName,
             email: document.email,
             age: document.age,
-            role: document.role
+            role: document.role,
+            connection: document.connection
         })
+    }
+
+    async deleteUsersByDate(days) {
+        const usersDeleted = await userModel.deleteMany({ connection: {$lt: days} })
+
+        if(!usersDeleted) {
+            return 'No se pudieron borrar los usuarios'
+        }
+
+        return 'Usuarios sin conexion hace mas 2 dias eliminados'
     }
 
 }

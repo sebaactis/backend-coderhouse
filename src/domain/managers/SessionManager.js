@@ -1,6 +1,5 @@
 import UserManager from './UserManager.js';
-import { createHash, generateToken, isValidPassword } from "../../utils/index.js";
-import EmailManager from './EmailManager.js';
+import { createHash, isValidPassword } from "../../utils/index.js";
 
 class SessionManager {
 
@@ -18,6 +17,14 @@ class SessionManager {
         if (!isHashedPassword) {
             throw new Error('Password invalid');
         }
+
+        const date = new Date();
+
+        const data = {
+            connection: date
+        }
+
+        await manager.updateUser(email, data);
 
         return user;
     }

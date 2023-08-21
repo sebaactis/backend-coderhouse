@@ -7,6 +7,7 @@ class User {
         this.age = props.age;
         this.role = props.role;
         this.password = props.password;
+        this.date = props.date;
     }
 }
 

@@ -3,3 +3,169 @@ error: Error: Product Not Found
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async ProductManager.getProductById (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/ProductManager.js:21:25)
     at async getOne (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/productsControllers.js:30:25)
+error: ValidationError: users validation failed: connection: Cast to date failed for value "21-7-2023" (type string) at path "connection"
+    at Document.invalidate (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\document.js:3108:32)
+    at applyDefaults (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\helpers\document\applyDefaults.js:101:17)
+    at model.Document (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\document.js:155:7)
+    at model.Model (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\model.js:121:12)
+    at new model (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\model.js:4543:15)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\model.js:2823:16
+    at Array.map (<anonymous>)
+    at Function.create (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongoose\lib\model.js:2812:38)
+    at repositoryUserMongoose.addUser (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/data/repositories/users/repositoryUserMongoose.js:8:40)
+    at UserManager.addUser (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/UserManager.js:12:42)
+error: MongoServerError: E11000 duplicate key error collection: e-commerce.users index: email_1 dup key: { email: "santiago123@gmail.com" }
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\operations\insert.js:50:33
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection_pool.js:327:25
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\sdam\server.js:207:17
+    at handleOperationResult (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\sdam\server.js:323:20)
+    at Connection.onMessage (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection.js:213:9)
+    at MessageStream.<anonymous> (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection.js:59:60)
+    at MessageStream.emit (node:events:513:28)
+    at processIncomingData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\message_stream.js:124:16)
+    at MessageStream._write (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\message_stream.js:33:9)
+    at writeOrBuffer (node:internal/streams/writable:392:12)
+error: Error: Cart Not Found
+    at repositoryCartMongoose.getCart (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/data/repositories/carts/repositoryCartMongoose.js:35:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async CartManager.updateCart (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/CartManager.js:58:20)
+    at async updateCart (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/cartsControllers.js:52:22)
+error: Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials i10-20020a9d624a000000b006b9848f8aa7sm3944326otk.45 - gsmtp
+    at SMTPConnection._formatError (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:790:19)
+    at SMTPConnection._actionAUTHComplete (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:1564:34)
+    at SMTPConnection.<anonymous> (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:546:26)
+    at SMTPConnection._processResponse (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:969:20)
+    at SMTPConnection._onData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:755:14)
+    at SMTPConnection._onSocketData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:193:44)
+    at TLSSocket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:324:12)
+    at readableAddChunk (node:internal/streams/readable:297:9)
+    at Readable.push (node:internal/streams/readable:234:10)
+error: Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials z144-20020a4a4996000000b00570e4ac7f43sm910821ooa.32 - gsmtp
+    at SMTPConnection._formatError (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:790:19)
+    at SMTPConnection._actionAUTHComplete (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:1564:34)
+    at SMTPConnection.<anonymous> (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:546:26)
+    at SMTPConnection._processResponse (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:969:20)
+    at SMTPConnection._onData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:755:14)
+    at SMTPConnection._onSocketData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\nodemailer\lib\smtp-connection\index.js:193:44)
+    at TLSSocket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:324:12)
+    at readableAddChunk (node:internal/streams/readable:297:9)
+    at Readable.push (node:internal/streams/readable:234:10)
+error: ReferenceError: createHash is not defined
+    at UserManager.addUser (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/UserManager.js:14:27)
+    at create (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/usersControllers.js:40:39)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+error: MongoServerError: E11000 duplicate key error collection: e-commerce.users index: email_1 dup key: { email: "manuel@gmail.com" }
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\operations\insert.js:50:33
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection_pool.js:327:25
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\sdam\server.js:207:17
+    at handleOperationResult (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\sdam\server.js:323:20)
+    at Connection.onMessage (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection.js:213:9)
+    at MessageStream.<anonymous> (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\connection.js:59:60)
+    at MessageStream.emit (node:events:513:28)
+    at processIncomingData (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\message_stream.js:124:16)
+    at MessageStream._write (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\mongodb\lib\cmap\message_stream.js:33:9)
+    at writeOrBuffer (node:internal/streams/writable:392:12)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:15:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)
+error: Error: data and hash arguments required
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:208:17)
+    at D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:29:12
+    at new Promise (<anonymous>)
+    at module.exports.promise (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\promises.js:20:12)
+    at Object.compare (D:\Descargas\Seba\Proyects\curso-backend-coderhouse\backend-coderhouse\node_modules\bcrypt\bcrypt.js:204:25)
+    at isValidPassword (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/utils/index.js:13:26)
+    at SessionManager.login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/domain/managers/SessionManager.js:17:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async login (file:///D:/Descargas/Seba/Proyects/curso-backend-coderhouse/backend-coderhouse/src/presentation/controllers/sessionControllers.js:10:22)

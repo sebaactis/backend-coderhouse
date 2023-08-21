@@ -3,12 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
 const transport = nodemailer.createTransport({
-    service: 'gmail',
-    port: 587,
-    auth: {
-        user: process.env.APP_EMAIL,
-        pass: process.env.APP_PASSWORD
-    }
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false
 })
 
 class TicketsManager {

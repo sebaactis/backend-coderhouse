@@ -7,7 +7,8 @@ const manager = new UserManager();
 export const getAll = async (req, res, next) => {
 
     try {
-        let users = await manager.getUsers();
+        const page = req.query.page;
+        let users = await manager.getUsers(page);
         res.status(200).json({ message: "success", payload: users })
     }
     catch (e) {
