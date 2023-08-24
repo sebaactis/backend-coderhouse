@@ -1,0 +1,916 @@
+{
+	"info": {
+		"_postman_id": "fc4b4a0e-b5a1-43c1-b08a-b6699ff54f86",
+		"name": "API Coderhouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26489275",
+		"_collection_link": "https://winter-meteor-449270.postman.co/workspace/Team-Workspace~3340ae30-9dc0-4132-861e-af4263e791c9/collection/26489275-fc4b4a0e-b5a1-43c1-b08a-b6699ff54f86?action=share&source=collection_link&creator=26489275"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/products",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/products/644a7811ad1ce3a3ac89a9f8",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"644a7811ad1ce3a3ac89a9f8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Products",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"TITLE\", _.sample(['Zapatillas Adidas', 'Zapatillas Nike', 'Zapatillas Puma']));\r",
+							"pm.environment.set(\"DESCRIPTION\", _.sample(['Zapatillas Adidas', 'Zapatillas Nike', 'Zapatillas Puma']));\r",
+							"pm.environment.set(\"PRICE\", _.random(100, 10000));\r",
+							"pm.environment.set(\"STOCK\", _.random(5, 50));\r",
+							"pm.environment.set(\"CODE\", _.random(1, 5000));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"title\": \"Campera Adidas\",\r\n            \"description\": \"Campera adidas 1\",\r\n            \"code\": \"ADC500\",\r\n            \"price\": 600,\r\n            \"status\": true,\r\n            \"stock\": 100,\r\n            \"category\": \"Camperas\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/products",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Campera Adidas 1\",\r\n    \"description\": \"Campera Adidas 1\",\r\n    \"code\": \"ADC500\",\r\n    \"price\": 600,\r\n    \"status\": true,\r\n    \"stock\": 10,\r\n    \"category\": \"Camperas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/products/64e3d72b7c454d88d794b4fe",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"64e3d72b7c454d88d794b4fe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/products/64c12d684bf6a41277ab442e",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"64c12d684bf6a41277ab442e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/carts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/carts/6496f33ff5a0fe0befb6fca5",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"6496f33ff5a0fe0befb6fca5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product To 1 Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/carts/64c2b506aa2825001638c212/product/6470f39f51cbcae5dae9fd3a",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"64c2b506aa2825001638c212",
+						"product",
+						"6470f39f51cbcae5dae9fd3a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete One Product From Cart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/carts/6496f33ff5a0fe0befb6fca5/product/6470f39f51cbcae5dae9fd3a",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"6496f33ff5a0fe0befb6fca5",
+						"product",
+						"6470f39f51cbcae5dae9fd3a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All Products From One Cart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/carts/64c2b506aa2825001638c212",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"64c2b506aa2825001638c212"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update All Cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n        {\r\n            \"product\": \"645004a7a1c5e2696a8a1b56\",\r\n            \"quantity\": 202\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/carts/6496f33ff5a0fe0befb6fca5",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"6496f33ff5a0fe0befb6fca5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update One Product Cart",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantity\": 250\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/carts/6496f33ff5a0fe0befb6fca5/product/645004a7a1c5e2696a8a1b56",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"6496f33ff5a0fe0befb6fca5",
+						"product",
+						"645004a7a1c5e2696a8a1b56"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/carts/purchase/6496f33ff5a0fe0befb6fca5",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"carts",
+						"purchase",
+						"6496f33ff5a0fe0befb6fca5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n\"firstName\": \"Manuel\",\r\n\"lastName\": \"Ernser\",\r\n\"email\": \"manuel@gmail.com\",\r\n\"age\": 20,\r\n\"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/sebaactis@gmail.com",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"sebaactis@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Pedro\",\r\n    \"lastName\": \"Caram\",\r\n    \"email\": \"pepe123@gmail.com\",\r\n    \"age\": 25,\r\n    \"password\": \"12345\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/manuel@gmail.com",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"manuel@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Karlina\",\r\n    \"age\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/Karlee9@hotmail.com",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"Karlee9@hotmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign UP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Pedro\",\r\n    \"lastName\": \"Benitez\",\r\n    \"email\": \"pepe@gmail.com\",\r\n    \"age\": 55,\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/session/signup",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sebaactis@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/session/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Current",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sebaactis@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/session/current",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/session/logout",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"email\": \"sebaactis@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/password/forgotPassword",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"password",
+						"forgotPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Pedro\",\r\n    \"lastName\": \"Caram\",\r\n    \"email\": \"pepe123@gmail.com\",\r\n    \"age\": 25,\r\n    \"password\": \"12345\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/password/updatePassword?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3NzViZjQxZTljZTRhNTk2MGNkODFmIiwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJBY3RpcyIsImVtYWlsIjoic2ViYWFjdGlzQGdtYWlsLmNvbSIsImFnZSI6MjUsInJvbGUiOnsiX2lkIjoiNjQ3NzVjNzY1MDk0ZDFhNTE3NjMyNWZiIiwibmFtZSI6ImFkbWluIiwiX192IjowfX0sImlhdCI6MTY4OTk1OTc2NywiZXhwIjoxNjg5OTU5ODI3fQ.E-dsEgzEsanTibyHwf-WF_3KAHp8KMSNjKR39wFESRY",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"password",
+						"updatePassword"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3NzViZjQxZTljZTRhNTk2MGNkODFmIiwiZmlyc3ROYW1lIjoiU2ViYXN0aWFuIiwibGFzdE5hbWUiOiJBY3RpcyIsImVtYWlsIjoic2ViYWFjdGlzQGdtYWlsLmNvbSIsImFnZSI6MjUsInJvbGUiOnsiX2lkIjoiNjQ3NzVjNzY1MDk0ZDFhNTE3NjMyNWZiIiwibmFtZSI6ImFkbWluIiwiX192IjowfX0sImlhdCI6MTY4OTk1OTc2NywiZXhwIjoxNjg5OTU5ODI3fQ.E-dsEgzEsanTibyHwf-WF_3KAHp8KMSNjKR39wFESRY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Pedro\",\r\n    \"lastName\": \"Caram\",\r\n    \"email\": \"pepe123@gmail.com\",\r\n    \"age\": 25,\r\n    \"password\": \"12345\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/password/changePassword",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"password",
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Roles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sebaactis@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/roles",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Role By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sebaactis@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/roles/64775b936c021a596c3ceafa",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"64775b936c021a596c3ceafa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/roles",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/roles/6489c38367132516eed3e977",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"6489c38367132516eed3e977"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sebaactis@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/roles/6489c38367132516eed3e977",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"6489c38367132516eed3e977"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

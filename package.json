@@ -9,6 +9,9 @@
     "test": "mocha src/tests/*.test.js",
     "cluster": "pm2 start src/index.js -i 4"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "type": "module",
   "author": "",
   "license": "ISC",
